@@ -1,0 +1,67 @@
+/* InventoryItem.css */
+.inventory-item {
+  margin-top: 10px;
+  position: relative;
+  overflow: hidden;
+  touch-action: none; /* 터치 제스처를 활성화합니다 */
+  display: flex;
+  align-items: center;
+  background-color: #ffffff; /* 컴포넌트 배경색 설정 */
+  transition: transform 0.3s ease-in-out; /* 컨텐츠 이동 시 부드러운 애니메이션 */
+}
+
+.content {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  transition: transform 0.3s ease-in-out; /* 콘텐츠 이동 시 애니메이션 */
+}
+
+.buttons {
+  height: 100%;
+  position: absolute;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: row;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(100%); /* 기본적으로 숨깁니다 */
+  z-index: 10; /* 버튼이 다른 요소 위에 보이도록 설정 */
+}
+
+.inventory-item.show-buttons .content {
+  transform: translateX(-120px); /* 버튼 공간 만큼 왼쪽으로 이동 */
+}
+
+.inventory-item.show-buttons .buttons {
+  transform: translateX(0); /* 버튼을 보이게 합니다 */
+}
+
+.inventory-item .buttons button {
+  height: 100%;
+  width: 100%;
+  padding: 8px;
+  border: none;
+  color: #ffffff;
+  font-size: 0.875rem; /* 작은 텍스트 크기 */
+  cursor: pointer;
+}
+
+/* 애니메이션을 위한 트랜지션 설정 */
+.transition-height {
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* 세부정보가 열릴 때의 높이 */
+.details-open {
+  max-height: 300px; /* 필요에 따라 조정 */
+  opacity: 1;
+}
+
+/* 세부정보가 닫힐 때의 높이 */
+.details-closed {
+  max-height: 0;
+  opacity: 0;
+}
