@@ -6,7 +6,7 @@ import './App.css'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { TradeMain, TradeBrokerMain } from "./components/trade";
 import AlarmHistory from "./components/common/header/AlarmHistory";
-import CustomerMain from "./components/main/broker/CustomerMain.jsx";
+import CustomerMain from "./components/main/CustomerMain.jsx";
 import AxiosInstanceTest from './components/common/AxiosInstanceTest';
 import PrivateRoute from './components/common/PrivateRoute';
 import SocialLoading from './components/login_signup/SocialLoading';
@@ -16,10 +16,6 @@ import {
 	Layout,
 	Setting,
 	Main,
-	InventoryView,
-	Income,
-	SignUp,
-	HistoryOutlet,
 	TradeView,
 	Cart,
 } from "./pages";
@@ -27,24 +23,12 @@ import {
 import {
 	MainSetting,
 	UserInfoSetting,
-	QrInfo,
 	PasswordChange,
-	TeamInfo,
-	InventorySetting,
-	Alarm,
 } from "./components/setting";
 
 import {
 	SignUpInfo,
 } from "./components/login_signup";
-
-import {
-	History,
-	OutgoingList,
-	IncomingList,
-	OutgoingReqList,
-	AdjustList,
-} from "./components/history";
 
 function App() {
   return (
@@ -63,23 +47,16 @@ function App() {
                   <Route path="/setting" element={<Setting />}>
                     <Route path="" element={<MainSetting />} />
                     <Route path="users" element={<UserInfoSetting />} />
-                    <Route path="qr" element={<QrInfo />} />
-                    <Route path="alarm-history" element={<AlarmHistory />} />
                     <Route path="password" element={<PasswordChange />} />
-                    <Route path="teams" element={<TeamInfo />} />
-                    <Route path="inventories" element={<InventorySetting />} />
-                    <Route path="alarms" element={<Alarm />} />
                   </Route>
-
                   <Route path="/main" element={<CustomerMain />}/>
-                  <Route path="outgoings" element={<OutgoingReqList />} />
 
                   <Route path="/trades" element={<TradeView />}>
                     <Route path="" element={<TradeMain />} />
                     <Route path="broker/:id" element={<TradeBrokerMain />} />
                   </Route>
+
                   <Route path="/carts" element={<Cart />} />
-                  <Route path="/incoming" element={<Income />} />
                   <Route path="/alarm-history" element={<AlarmHistory />} />
                 </Route>
               </Route>
