@@ -4,10 +4,15 @@ import BrokerInfo from './BrokerInfo';
 import withTradeClickHandler from '../../../hooks/trade/withTradeClickHandler';
 import BrokerInventory from '../inventory/BrokerInventory';
 import InventoryItemDetails from '../../inventory/InventoryItemDetails';
+import { useLocation, useParams } from 'react-router-dom';
 
-const BrokerDeatil = ({ id }) => {
+const BrokerDeatil = ({id}) => {
+    const { brokerId } = useParams(); 
+    const location = useLocation();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
+
+    const company = location.state?.company;
 
     const handleItemClick = (item) => {
         setSelectedItem(item);
@@ -23,7 +28,7 @@ const BrokerDeatil = ({ id }) => {
 
     return (
         <div className='w-11/12 flex flex-col items-center justify-center '>
-            <BrokerInfo/>
+            <BrokerInfo company={company}/>
             <BrokerInventory/>
         </div>
     );
