@@ -14,15 +14,15 @@ const TodayInfo = () => {
 				}}
 			>
 				<div className="flex flex-col border-r border-white pr-2 gap-2">
-					<div>{"총거래"}</div>
+					<div>{"출고 요청"}</div>
 					<div className="self-center text-2xl">{"0"}</div>
 				</div>
 				<div className="flex flex-col border-r border-white pr-2 gap-2">
-					<div>{"입고"}</div>
+					<div>{"출고 대기"}</div>
 					<div className="self-center text-2xl">{"0"}</div>
 				</div>
 				<div className="flex flex-col pr-2 gap-2">
-					<div>{"출고"}</div>
+					<div>{"출고 완료"}</div>
 					<div className="self-center text-2xl">{"0"}</div>
 				</div>
 			</div>
