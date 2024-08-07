@@ -34,21 +34,21 @@ const Bottom = () => {
 					className="w-6 h-6 mb-1"
 				/>
 				<span className="text-xs font-extralight text-gray-400">
-					거래 내역
+					출고 내역
 				</span>
 			</div>
 			<div
-				aria-label="재고 내역"
+				aria-label="장바구니"
 				className="flex flex-col items-center text-gray-600 hover:text-gray-500 flex-1 text-center py-2"
-				onClick={() => onClick("/inventories")}
+				onClick={() => onClick("/carts")}
 			>
 				<img
-					src={bottomIcon.iventoryIcon}
-					alt="재고 내역 아이콘"
+					src={bottomIcon.cartIcon}
+					alt="장바구니 아이콘"
 					className="w-6 h-6 mb-1"
 				/>
 				<span className="text-xs font-extralight text-gray-400">
-					재고 조회
+					장바구니
 				</span>
 			</div>
 			<div
