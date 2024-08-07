@@ -4,7 +4,7 @@ import BrokerInfo from './BrokerInfo';
 import BrokerInventory from '../inventory/BrokerInventory';
 import { useLocation, useParams } from 'react-router-dom';
 
-const BrokerDeatil = ({id}) => {
+const BrokerDeatil = () => {
     const { brokerId } = useParams(); 
     const location = useLocation();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +25,10 @@ const BrokerDeatil = ({id}) => {
     return (
         <div className='w-11/12 flex flex-col items-center justify-center '>
             <BrokerInfo company={company}/>
-            <BrokerInventory/>
+        
+            <div className='w-full text-left text-gray-500'>표기된 금액은 kg 당 금액 입니다</div>
+            <div className='w-full text-xl font-bold my-2'>재고 목록</div>
+            <BrokerInventory id={company.id}/>
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import BrokerDeatil from './broker/BrokerDeatil';
 import BrokerSearchInput from '../common/BrokerSearchInput';
@@ -13,7 +13,6 @@ const TradeBrokerMain = () => {
 
   return (
     <>
-        <BrokerSearchInput />
         <BrokerDeatil id={brokerId} />
     </>
   );
