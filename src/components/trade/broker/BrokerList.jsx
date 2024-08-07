@@ -1,48 +1,83 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import BrokerInfo from './BrokerInfo'; // BrokerInfo를 CompanyInfo로 이름 변경할 수도 있습니다.
+import BrokerInfo from './BrokerInfo';
 import { url } from '../../../constants/defaultUrl';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-const BrokerList = ({ page = 1, size = 10 }) => {
-    const [companies, setCompanies] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+const fetchCompanies = async ({ pageParam = 1, size = 10, searchWord = "" }) => {
+  const response = await axios.get(`${url}/companies`, {
+    params: { page: pageParam, size, searchWord },
+  });
+  return response.data;
+};
 
-    useEffect(() => {
-        const fetchCompanies = async () => {
-            setLoading(true);
-            setError(null);
-            try {
-                const response = await axios.get(`${url}/companies`, {
-                    params: { page, size ,searchWord:"자갈치"}
-                });
-                console.log(response.data);
-                setCompanies(response.data);
-            } catch (err) {
-                setError(err);
-            }
-            setLoading(false);
-        };
+const BrokerList = ({ searchQuery="", size = 10 }) => {
+  const [currentSearchTerm, setCurrentSearchTerm] = useState(searchQuery);
+  const loadMoreRef = useRef(null);
+  console.log(searchQuery);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
+    queryKey: ['brokerList', size, currentSearchTerm],
+    queryFn: ({ pageParam = 1 }) => fetchCompanies({ pageParam, size, searchWord: currentSearchTerm }),
+    getNextPageParam: (lastPage, pages) => {
+      return lastPage.length === size ? pages.length + 1 : undefined;
+    },
+  });
 
-        fetchCompanies();
-    }, [page, size]);
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: '20px',
+      threshold: 1.0,
+    };
+    const observer = new IntersectionObserver(handleObserver, options);
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+    return () => {
+      if (loadMoreRef.current) {
+        observer.unobserve(loadMoreRef.current);
+      }
+    };
+  }, [loadMoreRef.current, hasNextPage]);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
+  const handleObserver = (entries) => {
+    const target = entries[0];
+    if (target.isIntersecting && hasNextPage) {
+      fetchNextPage();
+    }
+  };
 
-    return (
-        <div className='flex flex-col items-center my-2 w-11/12'>
-            {companies.map(company => (
-                <BrokerInfo key={company.id} company={company}/>
-            ))}
-        </div>
-    );
+  useEffect(() => {
+    setCurrentSearchTerm(searchQuery);
+  }, [searchQuery]);
+
+  if (status === 'loading') return <p>Loading...</p>;
+  if (status === 'error') return <p>Error loading data.</p>;
+
+  const companies = data?.pages.flatMap(page => page) || [];
+
+  return (
+    <div className="flex flex-col items-center my-2 w-11/12">
+      {companies.map(company => (
+        <BrokerInfo key={company.id} company={company} />
+      ))}
+      <div ref={loadMoreRef} className="h-10 flex justify-center items-center">
+        {isFetchingNextPage && <p>Loading more...</p>}
+      </div>
+    </div>
+  );
 };
 
 BrokerList.propTypes = {
-    page: PropTypes.number,
-    size: PropTypes.number
+  searchQuery: PropTypes.string.isRequired, // Ensure searchQuery is a string and required
+  size: PropTypes.number,
 };
 
 export default BrokerList;

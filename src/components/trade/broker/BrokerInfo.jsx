@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import { tradeIcon } from '../../../constants/trade/trade.image';
 
-const BrokerItem = ({ company }) => { // Accept `id` as a prop
+const BrokerItem = ({ company }) => { // Accept `company` as a prop
+    const { id, companyName, address } = company; // Destructure necessary properties
     const [isLike, setIsLike] = useState(false);
     const navigate = useNavigate(); // Create navigate instance
 
@@ -13,7 +14,7 @@ const BrokerItem = ({ company }) => { // Accept `id` as a prop
     }
 
     const handleBrokerClick = () => {
-        navigate(`broker/${company.id}`); // Navigate to the broker detail page with ID
+        navigate(`/trades/broker/${id}`, { state: { company } });  // Navigate to the broker detail page with ID
     }
 
     return (
@@ -31,9 +32,9 @@ const BrokerItem = ({ company }) => { // Accept `id` as a prop
             </div>
             {/* Text Content */}
             <div className='flex flex-col justify-between items-start gap-2 w-full'>
-                <div className='text-lg font-bold overflow-hidden whitespace-nowrap text-ellipsis'>{company.companyName}</div>
-                <div className='text-sm overflow-hidden whitespace-nowrap text-ellipsis'>{`${company.address.mainAddress} ${company.address.subAddress}`}</div>
-                <div className='overflow-hidden whitespace-nowrap text-ellipsis'>{company.address.postCode}</div>
+                <div className='text-lg font-bold overflow-hidden whitespace-nowrap text-ellipsis'>{companyName}</div>
+                <div className='text-sm overflow-hidden whitespace-nowrap text-ellipsis'>{`${address.mainAddress} ${address.subAddress}`}</div>
+                <div className='overflow-hidden whitespace-nowrap text-ellipsis'>{address.postCode}</div>
             </div>
             {/* Like Button */}
             <div className='absolute bottom-0 right-0 mb-2 mr-2'>
@@ -50,7 +51,15 @@ const BrokerItem = ({ company }) => { // Accept `id` as a prop
 };
 
 BrokerItem.propTypes = {
-    id: PropTypes.string.isRequired, // Ensure `id` prop is passed and is a string
+    company: PropTypes.shape({
+        id: PropTypes.number.isRequired, // Ensure `id` prop is passed and is a string
+        companyName: PropTypes.string.isRequired,
+        address: PropTypes.shape({
+            mainAddress: PropTypes.string.isRequired,
+            subAddress: PropTypes.string.isRequired,
+            postCode: PropTypes.string.isRequired,
+        }).isRequired,
+    }).isRequired,
 };
 
 export default BrokerItem;

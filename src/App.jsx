@@ -41,9 +41,7 @@ function App() {
               <Route path="/loading" element={<SocialLoading />} />
               <Route path="/signup" element={<SignUpInfo />}/>
 
-              {/* 보호된 라우트 */}
-              <Route element={<PrivateRoute />}>
-                <Route element={<Layout />}>
+              <Route element={<Layout />}>
                   <Route path="/setting" element={<Setting />}>
                     <Route path="" element={<MainSetting />} />
                     <Route path="users" element={<UserInfoSetting />} />
@@ -53,13 +51,12 @@ function App() {
 
                   <Route path="/trades" element={<TradeView />}>
                     <Route path="" element={<TradeMain />} />
-                    <Route path="broker/:id" element={<TradeBrokerMain />} />
+                    <Route path="broker/:brokerId" element={<TradeBrokerMain />} />
                   </Route>
 
                   <Route path="/carts" element={<Cart />} />
                   <Route path="/alarm-history" element={<AlarmHistory />} />
                 </Route>
-              </Route>
 
               {/* 테스트 라우트 - 로그인 상태와 관계없이 접근 가능 */}
               <Route path="test" element={<AxiosInstanceTest />} />
