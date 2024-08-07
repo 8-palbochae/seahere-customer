@@ -6,6 +6,7 @@ import { url } from '../../../constants/defaultUrl';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import ClipLoader from "react-spinners/ClipLoader";
+import useCartStore from '../../../stores/cart';
 
 const fetchCompanies = async ({ pageParam = 1, size = 10, companyId = null }) => {
   try {
@@ -30,6 +31,11 @@ const BrokerInventory = ({ id }) => {
   const [selectedInventory, setSelectedInventory] = useState(null);
   const navigate = useNavigate();
   const loadMoreRef = useRef(null);
+
+   const { cartItems } = useCartStore(state => ({
+        cartItems: state.cartItems,
+    }));
+
 
   const {
     data,
@@ -116,7 +122,7 @@ const BrokerInventory = ({ id }) => {
           </div>
         </div>
 
-        <CartModal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <CartModal isOpen={isModalOpen} onClose={handleCloseModal} inventory={selectedInventory}>
           <div className="p-4 w-full">
             {selectedInventory && <BrokerInventoryItem inventory={selectedInventory} />}
           </div>
@@ -128,7 +134,7 @@ const BrokerInventory = ({ id }) => {
           className="bg-blue-600 w-full text-white h-full p-3 font-bold rounded-md"
           onClick={handleTradeClick}
         >
-          {`도움 요청 목록 (0)건`}
+          {`출고 요청 목록 (${cartItems.length})건`}
         </button>
       </div>
     </>
