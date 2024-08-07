@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BrokerDeatil from './broker/BrokerDeatil';
-import BrokerSearchInput from '../common/BrokerSearchInput ';
+import BrokerSearchInput from '../common/BrokerSearchInput';
 import { useParams } from 'react-router-dom';
 
 const TradeBrokerMain = () => {

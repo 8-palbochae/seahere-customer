@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import BrokerInfo from './BrokerInfo';
-// import withTradeClickHandler from '../../../hooks/trade/withTradeClickHandler';
 import BrokerInventory from '../inventory/BrokerInventory';
-import InventoryItemDetails from '../../inventory/InventoryItemDetails';
 import { useLocation, useParams } from 'react-router-dom';
 
 const BrokerDeatil = ({id}) => {
@@ -23,8 +21,6 @@ const BrokerDeatil = ({id}) => {
         setIsModalOpen(false);
         setSelectedItem(null);
     };
-
-    // const ClickableInventoryItem = withTradeClickHandler(InventoryItemDetails, handleItemClick);
 
     return (
         <div className='w-11/12 flex flex-col items-center justify-center '>

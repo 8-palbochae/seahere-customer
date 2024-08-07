@@ -1,17 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import BrokerSearchInput from '../common/BrokerSearchInput ';
+import React, { useState } from 'react';
+import BrokerSearchInput from '../common/BrokerSearchInput';
 import BrokerList from './broker/BrokerList';
 
 const TradeMain = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+
   return (
     <>
-      <BrokerSearchInput/>
-      <BrokerList/>
+      <BrokerSearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <BrokerList searchQuery={searchQuery} />
     </>
   );
 };
-
-TradeMain.propTypes = {};
 
 export default TradeMain;
