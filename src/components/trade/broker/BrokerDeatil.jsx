@@ -5,6 +5,7 @@ import BrokerInventory from '../inventory/BrokerInventory';
 import { useLocation, useParams } from 'react-router-dom';
 
 const BrokerDeatil = () => {
+const BrokerDeatil = () => {
     const { brokerId } = useParams(); 
     const location = useLocation();
     const [isModalOpen, setIsModalOpen] = useState(false);

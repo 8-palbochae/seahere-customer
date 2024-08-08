@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CartModal from "../cart/CartModal";
 import BrokerInventoryItem from "./BrokerInventoryItem";
 import { useNavigate } from "react-router-dom";
@@ -108,6 +109,19 @@ const BrokerInventory = ({ id , company}) => {
 
   const inventoryItems = data?.pages.flatMap(page => page) || [];
 
+  return (
+    <>
+      <div className="relative min-h-screen pb-16 w-full">
+        <div className="w-full cursor-pointer flex flex-col gap-2">
+          {inventoryItems.map((inventory) => (
+            <div key={`${inventory.inventoryId}`} onClick={() => handleOpenModal(inventory)}>
+              <BrokerInventoryItem inventory={inventory} />
+            </div>
+          ))}
+          <div ref={loadMoreRef} className="h-10 flex justify-center items-center">
+            {isFetchingNextPage && <p>Loading more...</p>}
+          </div>
+        </div>
   return (
     <>
       <div className="relative min-h-screen pb-16 w-full">
