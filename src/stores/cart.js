@@ -1,25 +1,37 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-const cartItemShape = {
-  id: null,
-  name: '',
-  quantity: 0,
-  price: 0,
-};
-
 const useCartStore = create(persist(
-  (set) => ({
-    cartItems: [], // 초기 상태는 빈 배열로 설정
+  (set, get) => ({
+    cartItems: [], 
+    company: null, 
 
-    addItem: (item) => set((state) => {
-      const updatedCartItems = [...state.cartItems, item];
-      return { cartItems: updatedCartItems };
-    }),
+    addItem: (item) => {
+      const { cartItems, company } = get();
+      
+      if (company && company !== item.companyId) {
+        if (window.confirm('다른 중매인의 상품을 담았습니다. 장바구니가 초기화 됩니다.')) {
+          return set(() => ({
+            cartItems: [item],
+            company: item.companyId,
+          }));
+        } else {
+          return; 
+        }
+      }
+
+      const updatedCartItems = [...cartItems, item];
+      return set(() => ({
+        cartItems: updatedCartItems,
+        company: item.companyId,
+      }));
+    },
 
     removeItem: (id) => set((state) => {
       const updatedCartItems = state.cartItems.filter(item => item.id !== id);
-      return { cartItems: updatedCartItems };
+      const remainingItems = updatedCartItems.length > 0;
+      const newCompany = remainingItems ? state.company : null;
+      return { cartItems: updatedCartItems, company: newCompany };
     }),
 
     updateItemQuantity: (id, quantity) => set((state) => {
@@ -30,7 +42,8 @@ const useCartStore = create(persist(
     }),
 
     clearCart: () => set(() => ({
-      cartItems: []
+      cartItems: [],
+      company: null,
     })),
   }),
   {

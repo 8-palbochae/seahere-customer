@@ -1,45 +1,56 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import useCartStore from '../../../stores/cart'; // Zustand 스토어의 실제 경로를 사용하세요
+import useCartStore from '../../../stores/cart'; 
 
-const CartModal = ({ isOpen, onClose, inventory, children }) => {
+const CartModal = ({ isOpen, onClose, inventory, companyId, children }) => {
     const [weight, setWeight] = useState(''); 
-    const addItem = useCartStore((state) => state.addItem);
-    const updateItemQuantity = useCartStore((state) => state.updateItemQuantity);
-    const cartItems = useCartStore((state) => state.cartItems);
+    const { addItem, updateItemQuantity, cartItems, clearCart, company: cartCompanyId } = useCartStore((state) => ({
+        addItem: state.addItem,
+        updateItemQuantity: state.updateItemQuantity,
+        cartItems: state.cartItems,
+        clearCart: state.clearCart,
+        company: state.company,
+    }));
 
     if (!isOpen) return null;
 
-    // 무게 입력 함수
     const handleWeightChange = (e) => {
-        const value = e.target.value === '' ? '' : Math.max(Number(e.target.value), 0); // 빈 문자열 처리
+        const value = e.target.value === '' ? '' : Math.max(Number(e.target.value), 0); 
         setWeight(value);
     };
 
     const handleAddToCart = () => {
         const item = {
-            id: inventory.id,
+            id: inventory.inventoryId,
             name: inventory.name,
-            unitPrice : inventory.price,
+            unitPrice: inventory.price,
             quantity: Number(weight),
             price: inventory.price * Number(weight),
             country: inventory.country,
             naturalStatus: inventory.naturalStatus,
             category: inventory.category,
+            companyId: companyId,
         };
 
-        // 장바구니에 이미 아이템이 있는지 확인
+        if (weight <= 0) {
+            alert('Please enter a valid weight.');
+            return;
+        }
+
+        if (cartCompanyId && cartCompanyId !== companyId) {
+            if (!window.confirm('장바구니는 같은 중매인의 상품만 담을 수 있습니다.(담기 클릭 시 이전에 담은 상품은 삭제 됩니다)')) {
+                return;
+            }
+            clearCart(); 
+        }
+
         const existingItem = cartItems.find((cartItem) => cartItem.id === item.id);
 
         if (existingItem) {
-            // 아이템이 이미 장바구니에 있는 경우 수량 업데이트
             updateItemQuantity(item.id, existingItem.quantity + item.quantity);
         } else {
-            // 아이템이 장바구니에 없는 경우 새로 추가
-            if (item.quantity !== 0) {
-                addItem(item);
-            }
+            addItem(item);
         }
 
         setWeight('');
@@ -65,9 +76,8 @@ const CartModal = ({ isOpen, onClose, inventory, children }) => {
                             />
                         </div>
                     </div>
-                   
                     <div className='flex justify-center text-center text-lg'>
-                        <span className='text-gray-500'>구매 금액:</span> <span className='text-black font-bold ml-2'>{inventory.price * weight} 원</span>
+                        <span className='text-gray-500'>구매 금액:</span> <span className='text-black font-bold ml-2'>{(inventory.price * weight).toFixed(2)} 원</span>
                     </div>
                     <div className='flex justify-center gap-3 mt-4'>
                         <button 
@@ -94,13 +104,14 @@ CartModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
     inventory: PropTypes.shape({
-        id: PropTypes.number.isRequired,
+        inventoryId: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
         country: PropTypes.string.isRequired,
         naturalStatus: PropTypes.string.isRequired,
         category: PropTypes.string.isRequired,
     }).isRequired,
+    companyId: PropTypes.number.isRequired, // companyId를 필수 prop으로 추가
     children: PropTypes.node,
 };
 
