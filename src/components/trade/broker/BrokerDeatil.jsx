@@ -25,9 +25,9 @@ const BrokerDeatil = () => {
     return (
         <div className='w-11/12 flex flex-col items-center justify-center '>
             <BrokerInfo company={company}/>
-        
-            <div className='w-full text-left text-gray-500'>표기된 금액은 kg 당 금액 입니다</div>
-            <div className='w-full text-xl font-bold my-2'>재고 목록</div>
+            <div className='w-full text-left text-gray-500 mt-2'>표기된 금액은 kg 당 금액 입니다</div>
+            <div className='w-full text-left text-gray-500'>재고량은 출고 시점과 상이할 수 있습니다</div>
+            {/* <div className='w-full text-xl font-bold my-2'>재고 목록</div> */}
             <BrokerInventory id={brokerId} company={company}/>
         </div>
     );

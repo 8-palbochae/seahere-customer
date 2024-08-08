@@ -19,15 +19,16 @@ const BrokerInventoryItem = ({ inventory }) => {
             </div>
             <div className='w-2/5 flex flex-col items-center text-center border-gray-300 p-2'>
                 <div className='text-lg font-bold'>{inventory.name}</div>
-                <div className='text-md'>{inventory.category}</div>
+                <div className='font-semibold text-gray-500'>{`재고 : ${inventory.quantity}`}<span>Kg</span></div>
             </div>
             <div className='w-1/5 flex flex-col items-center text-center border-gray-300 p-2'>
+                <div className='text-md'>{inventory.category}</div>
                 <div className='text-md'>{inventory.country}</div>
                 <div className='text-md'>{inventory.naturalStatus}</div>
             </div>
             <div className='w-3/12 flex flex-col items-center text-center border-gray-300 p-2'>
                 <div>
-                    <span className='font-bold text-blue-600'>{inventory.price}</span>
+                    <span className='font-bold text-blue-600'>{inventory.price.toLocaleString()}</span>
                 </div>
             </div>
         </div>
