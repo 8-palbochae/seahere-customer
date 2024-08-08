@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { url } from '../../../constants/defaultUrl';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import ClipLoader from "react-spinners/ClipLoader";
+import useCartStore from '../../../stores/cart';
+import { SyncLoader } from 'react-spinners';
 
 const fetchCompanies = async ({ pageParam = 1, size = 10, companyId = null }) => {
   try {
@@ -25,11 +26,16 @@ const fetchCompanies = async ({ pageParam = 1, size = 10, companyId = null }) =>
   }
 };
 
-const BrokerInventory = ({ id }) => {
+const BrokerInventory = ({ id , company}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedInventory, setSelectedInventory] = useState(null);
   const navigate = useNavigate();
   const loadMoreRef = useRef(null);
+
+   const { cartItems } = useCartStore(state => ({
+        cartItems: state.cartItems,
+    }));
+
 
   const {
     data,
@@ -54,18 +60,22 @@ const BrokerInventory = ({ id }) => {
 
   const handleCloseModal = () => setIsModalOpen(false);
 
-  const handleTradeClick = () => {
-    navigate("/carts");
+ const handleClickCart = () => {
+    const currentPath = window.location.pathname;
+    localStorage.setItem('previousPath', currentPath);
+    navigate("/carts"  , { state: { company } });
   };
 
   const handleObserver = (entries) => {
     const target = entries[0];
-    console.log('IntersectionObserver triggered', target.isIntersecting);
     if (target.isIntersecting && hasNextPage) {
-      console.log('Fetching next page');
       fetchNextPage();
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   useEffect(() => {
     const options = {
@@ -87,7 +97,7 @@ const BrokerInventory = ({ id }) => {
   if (status === 'loading') {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <ClipLoader size={50} color={"#123abc"} loading={true} />
+        <SyncLoader/>
       </div>
     );
   }
@@ -101,7 +111,6 @@ const BrokerInventory = ({ id }) => {
   }
 
   const inventoryItems = data?.pages.flatMap(page => page) || [];
-
   return (
     <>
       <div className="relative min-h-screen pb-16 w-full">
@@ -116,23 +125,31 @@ const BrokerInventory = ({ id }) => {
           </div>
         </div>
 
-        <CartModal isOpen={isModalOpen} onClose={handleCloseModal}>
-          <div className="p-4 w-full">
-            {selectedInventory && <BrokerInventoryItem inventory={selectedInventory} />}
-          </div>
-        </CartModal>
+        {isModalOpen && selectedInventory && (
+          <CartModal 
+            isOpen={isModalOpen} 
+            onClose={handleCloseModal} 
+            inventory={selectedInventory}
+            companyId={id} // inventory가 null이 아닐 때만
+          >
+            <div className="p-4 w-full">
+              {selectedInventory && <BrokerInventoryItem inventory={selectedInventory} />}
+            </div>
+          </CartModal>
+        )}
       </div>
 
-      <div className="fixed bottom-16 left-0 w-full px-4 pb-3 z-50 bg-white outline-none">
-        <button
-          className="bg-blue-600 w-full text-white h-full p-3 font-bold rounded-md"
-          onClick={handleTradeClick}
-        >
-          {`도움 요청 목록 (0)건`}
-        </button>
-      </div>
-    </>
-  );
+			{/* Button Positioned at the Bottom of the Viewport */}
+			<div className="fixed bottom-16 left-0 w-full px-4 pb-3 z-50 bg-white outline-none">
+				<button
+					className="bg-blue-600 w-full text-white h-full p-3 font-bold rounded-md"
+					onClick={handleClickCart}
+				>
+					{`도움 요청 목록 ${cartItems.length}건`}
+				</button>
+			</div>
+		</>
+	);
 };
 
 export default BrokerInventory;
