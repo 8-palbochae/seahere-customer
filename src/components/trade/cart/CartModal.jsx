@@ -16,7 +16,10 @@ const CartModal = ({ isOpen, onClose, inventory, companyId, children }) => {
     if (!isOpen) return null;
 
     const handleWeightChange = (e) => {
-        const value = e.target.value === '' ? '' : Math.max(Number(e.target.value), 0); 
+        let value = e.target.value === '' ? '' : Math.max(Number(e.target.value), 0);
+        if (value > inventory.quantity) {
+            value = inventory.quantity;
+        }
         setWeight(value);
     };
 
@@ -77,7 +80,7 @@ const CartModal = ({ isOpen, onClose, inventory, companyId, children }) => {
                         </div>
                     </div>
                     <div className='flex justify-center text-center text-lg'>
-                        <span className='text-gray-500'>구매 금액:</span> <span className='text-black font-bold ml-2'>{(inventory.price * weight).toFixed(2)} 원</span>
+                        <span className='text-gray-500'>구매 금액:</span> <span className='text-black font-bold ml-2'>{(inventory.price * weight).toLocaleString()} 원</span>
                     </div>
                     <div className='flex justify-center gap-3 mt-4'>
                         <button 
@@ -110,8 +113,9 @@ CartModal.propTypes = {
         country: PropTypes.string.isRequired,
         naturalStatus: PropTypes.string.isRequired,
         category: PropTypes.string.isRequired,
+        quantity: PropTypes.number.isRequired, // 추가된 필드
     }).isRequired,
-    companyId: PropTypes.string.isRequired, // companyId를 필수 prop으로 추가
+    companyId: PropTypes.string.isRequired,
     children: PropTypes.node,
 };
 
