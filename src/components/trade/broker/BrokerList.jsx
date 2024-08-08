@@ -15,7 +15,7 @@ const fetchCompanies = async ({ pageParam = 1, size = 10, searchWord = "" }) => 
 const BrokerList = ({ searchQuery="", size = 10 }) => {
   const [currentSearchTerm, setCurrentSearchTerm] = useState(searchQuery);
   const loadMoreRef = useRef(null);
-  console.log(searchQuery);
+
   const {
     data,
     fetchNextPage,
@@ -76,7 +76,7 @@ const BrokerList = ({ searchQuery="", size = 10 }) => {
 };
 
 BrokerList.propTypes = {
-  searchQuery: PropTypes.string.isRequired, // Ensure searchQuery is a string and required
+  searchQuery: PropTypes.string.isRequired, 
   size: PropTypes.number,
 };
 
