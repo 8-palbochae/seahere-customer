@@ -1,11 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const CartButtonGroup = ({company}) => {
+const CartButtonGroup = () => {
   const navigate = useNavigate();   
 
   const handleAddProduct = () => {
-    navigate(`/trades/broker/${company.id}`  , { state: { company } });
+    // navigate(`/trades/broker/${company.id}`  , { state: { company } });
+    navigate("/trades")
   }
 
   return (
