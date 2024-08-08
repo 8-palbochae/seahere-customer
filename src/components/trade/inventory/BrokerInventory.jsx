@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import React, { useEffect, useRef, useState } from "react";
 import CartModal from "../cart/CartModal";
 import BrokerInventoryItem from "./BrokerInventoryItem";
 import { useNavigate } from "react-router-dom";
@@ -75,6 +74,10 @@ const BrokerInventory = ({ id , company}) => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
+  useEffect(() => {
     const options = {
       root: null,
       rootMargin: '20px',
@@ -108,20 +111,6 @@ const BrokerInventory = ({ id , company}) => {
   }
 
   const inventoryItems = data?.pages.flatMap(page => page) || [];
-
-  return (
-    <>
-      <div className="relative min-h-screen pb-16 w-full">
-        <div className="w-full cursor-pointer flex flex-col gap-2">
-          {inventoryItems.map((inventory) => (
-            <div key={`${inventory.inventoryId}`} onClick={() => handleOpenModal(inventory)}>
-              <BrokerInventoryItem inventory={inventory} />
-            </div>
-          ))}
-          <div ref={loadMoreRef} className="h-10 flex justify-center items-center">
-            {isFetchingNextPage && <p>Loading more...</p>}
-          </div>
-        </div>
   return (
     <>
       <div className="relative min-h-screen pb-16 w-full">
@@ -150,16 +139,17 @@ const BrokerInventory = ({ id , company}) => {
         )}
       </div>
 
-      <div className="fixed bottom-16 left-0 w-full px-4 pb-3 z-50 bg-white outline-none">
-        <button
-          className="bg-blue-600 w-full text-white h-full p-3 font-bold rounded-md"
-          onClick={handleClickCart}
-        >
-          {`출고 요청 목록 (${cartItems.length})건`}
-        </button>
-      </div>
-    </>
-  );
+			{/* Button Positioned at the Bottom of the Viewport */}
+			<div className="fixed bottom-16 left-0 w-full px-4 pb-3 z-50 bg-white outline-none">
+				<button
+					className="bg-blue-600 w-full text-white h-full p-3 font-bold rounded-md"
+					onClick={handleClickCart}
+				>
+					{`도움 요청 목록 ${cartItems.length}건`}
+				</button>
+			</div>
+		</>
+	);
 };
 
 export default BrokerInventory;
