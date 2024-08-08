@@ -111,7 +111,7 @@ CartModal.propTypes = {
         naturalStatus: PropTypes.string.isRequired,
         category: PropTypes.string.isRequired,
     }).isRequired,
-    companyId: PropTypes.number.isRequired, // companyId를 필수 prop으로 추가
+    companyId: PropTypes.string.isRequired, // companyId를 필수 prop으로 추가
     children: PropTypes.node,
 };
 
