@@ -6,14 +6,15 @@ const postUser = async (userInfo, type) => {
         "email": userInfo.email,
         "password": userInfo.password,
         "username": userInfo.username,
-        "address": userInfo.address
+        "address": userInfo.address,
+        "telNumber" : userInfo.telNumber,
     };
 
     if (type === 'ceo' && userInfo.companyId) {
         body.companyId = userInfo.companyId;
     }
     try {
-        const res = await axios.post(`${url}/users/${type}`, body, {
+        const res = await axios.post(`${url}/users/customer`, body, {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
             },
@@ -52,8 +53,8 @@ const postSocialUser = async (socialUser) => {
     const body = {
         "userId" : socialUser.userId,
         "username" : socialUser.username,
-        "companyId" : socialUser.companyId,
         "address" : socialUser.address,
+        "telNumber" : socialUser.telNumber,
         "type" : socialUser.type,
     };
     
