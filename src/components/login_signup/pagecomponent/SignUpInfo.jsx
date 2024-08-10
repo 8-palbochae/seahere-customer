@@ -8,27 +8,31 @@ import InputField from '../itemcomponent/InputField';
 import SubmitButton from '../itemcomponent/SubmitButton';
 import useUserTypeStore from '../../../stores/signupType';
 import { postSocialUser, postUser } from '../../../api/user/userApi';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const SignUpInfo = () => {
-  const { userType,companyId,guestId,initializeState} = useUserTypeStore((state) => ({
+  const { userType, setUserType, setGuestId, initializeState } = useUserTypeStore((state) => ({
     userType: state.userType,
-    companyId: state.companyId,
-    guestId: state.guestId,
-    initializeState: state.initializeState,
+    setUserType: state.setUserType,
+    setGuestId : state.setGuestId,
+    initializeState : state.initializeState,
   }));
 
-  const navigate =useNavigate();
+  const [params, setParams] = useSearchParams();
+  const guestId = params.get('guest');
+
+  const navigate = useNavigate();
   const [isPostcodeOpen, setIsPostcodeOpen] = useState(false);
   const [postCode, setPostCode] = useState('');
   const [address, setAddress] = useState('');
   const [detailAddress, setDetailAddress] = useState('');
-
+  
   const [formValues, setFormValues] = useState({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
+    telNumber: '',
   });
 
   const handleInputChange = (e) => {
@@ -40,7 +44,7 @@ const SignUpInfo = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // 폼의 기본 동작을 막습니다.
+    e.preventDefault();
 
     if (formValues.password !== formValues.confirmPassword) {
       alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
@@ -51,15 +55,15 @@ const SignUpInfo = () => {
         "username": formValues.name,
         "email": formValues.email,
         "password": formValues.password,
-        "address" : {
-          "postCode" : postCode,
+        "address": {
+          "postCode": postCode,
           "mainAddress": address,
           "subAddress": detailAddress,
         },
-        ...(companyId && { companyId }),
-      }
-    const response = await postUser(userInfo,userType);
-      if(response.status===201){
+        "telNumber" : formValues.telNumber,
+      };
+      const response = await postUser(userInfo);
+      if (response.status === 201) {
         initializeState();
         navigate("/login");
       }
@@ -72,26 +76,26 @@ const SignUpInfo = () => {
     e.preventDefault();
 
     const userInfo = {
-      "userId" : guestId,
+      "userId": guestId,
       "username": formValues.name,
-      "address" : {
-        "postCode" : postCode,
+      "address": {
+        "postCode": postCode,
         "mainAddress": address,
         "subAddress": detailAddress,
       },
-      "companyId" : companyId,
-      "type" : userType,
-    }
+      "telNumber" : formValues.telNumber,
+      "type": "customer",
+    };
     try {
       const response = await postSocialUser(userInfo);
-      if(response.status===201){
+      if (response.status === 201) {
         initializeState();
         navigate("/login");
       }
-    }catch(error){
-
+    } catch (error) {
+      console.error('소셜 회원가입 오류:', error);
     }
-  }
+  };
 
   const handleComplete = (data) => {
     let fullAddress = data.address;
@@ -115,44 +119,18 @@ const SignUpInfo = () => {
   return (
     <Background backgroundSrc={background} logoSrc={MainLogo} backButtonSrc={back} backLink={"/login"}>
       <div className="absolute top-[400px] left-1/2 transform -translate-x-1/2 w-full max-w-[276px]">
-        <form className="relative w-full max-w-[276px]" onSubmit={guestId ? handleSubmitOAuth : handleSubmit}>
+        <form className="relative w-full max-w-[276px] flex flex-col-reverse" onSubmit={guestId ? handleSubmitOAuth : handleSubmit}>
+          <div className="mt-2">
+            <SubmitButton>시작하기</SubmitButton>
+          </div>
           <div className="mt-2">
             <InputField
               type="text"
-              name="name"
-              placeholder="이름"
-              value={formValues.name}
-              onChange={handleInputChange}
+              name="detailAddress"
+              placeholder="상세 주소"
+              value={detailAddress}
+              onChange={(e) => setDetailAddress(e.target.value)}
             />
-          </div>
-          <div className="mt-2">
-          {guestId ? null : (
-            <InputField
-              type="email"
-              name="email"
-              placeholder="이메일"
-              value={formValues.email}
-              onChange={handleInputChange}
-            />
-          )}
-          </div>
-          <div className="mt-2">
-            {guestId ? null : <InputField
-              type="password"
-              name="password"
-              placeholder="비밀번호"
-              value={formValues.password}
-              onChange={handleInputChange}
-            />}
-          </div>
-          <div className="mt-2">
-            {guestId ? null : <InputField
-              type="password"
-              name="confirmPassword"
-              placeholder="비밀번호 확인"
-              value={formValues.confirmPassword}
-              onChange={handleInputChange}
-            />}
           </div>
           <div className="mt-2">
             <InputField
@@ -167,15 +145,53 @@ const SignUpInfo = () => {
           </div>
           <div className="mt-2">
             <InputField
-              type="text"
-              name="detailAddress"
-              placeholder="상세 주소"
-              value={detailAddress}
-              onChange={(e) => setDetailAddress(e.target.value)}
+              type="tel"
+              name="telNumber"
+              placeholder="전화번호 입력"
+              value={formValues.telNumber}
+              onChange={handleInputChange}
+              className="cursor-pointer"
             />
           </div>
+          {guestId ? null : (
+            <>
+              <div className="mt-2">
+                <InputField
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="비밀번호 확인"
+                  value={formValues.confirmPassword}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="mt-2">
+                <InputField
+                  type="password"
+                  name="password"
+                  placeholder="비밀번호"
+                  value={formValues.password}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="mt-2">
+                <InputField
+                  type="email"
+                  name="email"
+                  placeholder="이메일"
+                  value={formValues.email}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </>
+          )}
           <div className="mt-2">
-            <SubmitButton>시작하기</SubmitButton>
+            <InputField
+              type="text"
+              name="name"
+              placeholder="이름"
+              value={formValues.name}
+              onChange={handleInputChange}
+            />
           </div>
         </form>
       </div>
