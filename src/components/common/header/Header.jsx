@@ -21,18 +21,13 @@ export const Header = () => {
 	return (
 		<div>
 			<div className="flex justify-between h-16 bg-white border-b border-D9D9D9">
-				{/* 로그아웃 아이콘이 있는 경우와 없는 경우 모두를 처리 */}
 				<div className="flex justify-center items-center w-16">
-					{showLogoutIcon ? (
-						<img
-							onClick={logoutHandler}
-							src={headerIcon.logoutIcon}
-							alt="로그아웃 아이콘"
-							className="w-6 h-6 cursor-pointer"
-						/>
-					) : (
-						<div className="w-6 h-6" />
-					)}
+					<img
+						onClick={() => onClick(-1)}
+						src={headerIcon.backIcon}
+						alt="뒤로가기 아이콘"
+						className="w-6 h-6 cursor-pointer"
+					/>
 				</div>
 				<div className="flex justify-items-center items-center text-center font-bold text-lg">
 					헤더입니다
