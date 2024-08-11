@@ -8,10 +8,11 @@ const CartButtonGroup = () => {
   
   const handleAddProduct = () => {
     navigate("/trades")
-  }
+  };
 
    const handleOpenModal = () => {
     setIsModalOpen(true);  
+   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);  
