@@ -8,9 +8,10 @@ const OutgoingModal = ({ isOpen, onClose }) => {
   const navigate =useNavigate();
   const [requestCompleted, setRequestCompleted] = useState(false);
   const [agreementChecked, setAgreementChecked] = useState(false);
-  const { cartItems, company } = useCartStore((state) => ({
+  const { cartItems, company, clearCart } = useCartStore((state) => ({
         cartItems: state.cartItems,
-        company : state.company
+        company : state.company,
+        clearCart : state.clearCart,
   }));
 
   if (!isOpen) return null;
@@ -38,6 +39,7 @@ const sendOutgoingRequest = async (outgoingRequests) => {
         });
 
         if(response.status === 200){
+          clearCart();
           navigate('/main');
           alert("출고 요청 성공");
         }
@@ -53,7 +55,6 @@ const sendOutgoingRequest = async (outgoingRequests) => {
       partialOutgoing : agreementChecked,
       details : toRequest(cartItems),
     }
-    console.log(outgoing);
     sendOutgoingRequest(outgoing);
   }
 
