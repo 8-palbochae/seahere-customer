@@ -26,7 +26,7 @@ const Bottom = () => {
 			<div
 				aria-label="거래 내역"
 				className="flex flex-col items-center text-gray-600 hover:text-gray-500 flex-1 text-center py-2"
-				onClick={() => onClick("histories")}
+				onClick={() => onClick("outgoings")}
 			>
 				<img
 					src={bottomIcon.historyIcon}
