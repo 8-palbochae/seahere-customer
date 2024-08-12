@@ -14,7 +14,7 @@ const OutgoingDetailItem = () => {
                     <div className='w-full font-bold text-xl'>광어</div>
                     <div className='w-full text-gray-600'>활어 자연산 국산</div>
                     <div className='w-full font-semibold flex gap-4'>
-                        <div clas>10 <span className='font-normal'>Kg</span></div>
+                        <div>10 <span className='font-normal'>Kg</span></div>
                         <div>10,000 <span className='font-normal'>원</span></div>    
                     </div>
                 </div>
