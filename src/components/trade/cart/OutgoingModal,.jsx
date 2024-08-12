@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import useCartStore from '../../../stores/cart';
 import { useNavigate } from 'react-router-dom';
+import { url } from '../../../constants/defaultUrl';
+import { axiosInstance } from '../../../api/common/axiosInstance';
 
 const OutgoingModal = ({ isOpen, onClose }) => {
-    const navigate =useNavigate();
+  const navigate =useNavigate();
   const [requestCompleted, setRequestCompleted] = useState(false);
   const [agreementChecked, setAgreementChecked] = useState(false);
-  const { cartItems, clearCart, company: cartCompanyId } = useCartStore((state) => ({
-    cartItems: state.cartItems,
-    clearCart: state.clearCart,
-    company: state.company,
+  const { cartItems, company, clearCart } = useCartStore((state) => ({
+        cartItems: state.cartItems,
+        company : state.company,
+        clearCart : state.clearCart,
   }));
 
   if (!isOpen) return null;
@@ -18,15 +20,43 @@ const OutgoingModal = ({ isOpen, onClose }) => {
     setAgreementChecked(!agreementChecked);
   };
 
-  const handleOutgoingRequest = () => {
-    console.log('출고 요청 목록:', cartItems);
-    console.log(agreementChecked);
-    setRequestCompleted(true);
-    setTimeout(() => {
-        navigate("/main");
-        onClose();
-    }, 2000); 
-  };
+  const toRequest = (details) => {
+    return details.map(detail => {
+        return {
+            inventoryId: detail.id, 
+            quantity: detail.quantity, 
+            price: detail.price
+        };
+    });
+};
+
+const sendOutgoingRequest = async (outgoingRequests) => {
+    try {
+        const response = await axiosInstance.post(`${url}/outgoings`, outgoingRequests, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if(response.status === 200){
+          clearCart();
+          navigate('/main');
+          alert("출고 요청 성공");
+        }
+
+    } catch (error) {
+      throw new error();
+    }
+};
+
+  const handleClickOugoing = () => {
+    const outgoing = {
+      companyId : company,
+      partialOutgoing : agreementChecked,
+      details : toRequest(cartItems),
+    }
+    sendOutgoingRequest(outgoing);
+  }
 
   return (
     <div className="fixed inset-0 flex items-center justify-center w-full bg-black bg-opacity-50 p-5">
@@ -57,7 +87,7 @@ const OutgoingModal = ({ isOpen, onClose }) => {
             </p>
             <div className="flex justify-end gap-2 w-full my-3">
               <button className="p-2 bg-gray-200 rounded-md w-full" onClick={onClose}>취소</button>
-              <button className="p-2 bg-blue-600 text-white rounded-md w-full" onClick={handleOutgoingRequest}>
+              <button className="p-2 bg-blue-600 text-white rounded-md w-full" onClick={handleClickOugoing}>
                 요청
               </button>
             </div>
