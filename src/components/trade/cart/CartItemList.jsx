@@ -5,6 +5,7 @@ import useCartStore from "../../../stores/cart";
 import { url } from "../../../constants/defaultUrl";
 import { tradeIcon } from "../../../constants/trade/trade.image";
 import { axiosInstance } from "../../../api/common/axiosInstance";
+import bottomIcon from '../../../constants/bottom/bottom.image';
 
 const CartItemList = () => {
 	const { cartItems, company } = useCartStore((state) => ({
@@ -17,8 +18,7 @@ const CartItemList = () => {
 	const [companyData, setCompanyData] = useState(null); // State to store the fetched data
 
 	useEffect(() => {
-		console.log(`${url}/companies/${company}`);
-		if (company) {
+		if (company !== null) {
 			const fetchData = async () => {
 				try {
 					const response = await axiosInstance.get(
@@ -38,16 +38,25 @@ const CartItemList = () => {
 			};
 
 			fetchData();
+		} else {
+			setIsLoaded(true); // If company is null, consider the data as loaded
 		}
 	}, [company]);
 
-	const totalShipmentAmount = cartItems.reduce((total, cartItem) => {
-		return total + (cartItem.price || 0);
-	}, 0);
-
-	const totalQuantity = cartItems.reduce((total, cartItem) => {
-		return total + (cartItem.quantity || 0);
-	}, 0);
+	if (company === null) {
+		return (
+			<div className="flex items-center justify-center w-full h-3/5">
+				<div className="flex flex-col justify-center text-gray-500 items-center text-center">
+					<div className='w-20 h-20 mb-4'>
+						<img src={bottomIcon.cartIcon} alt="Empty Cart" className='w-full h-full object-cover' />
+					</div>
+					<div>
+						장바구니가 비어 있습니다.
+					</div>
+				</div>
+			</div>
+		);
+	}
 
 	if (error) {
 		return <div className="text-red-500">Error: {error}</div>;
@@ -56,6 +65,14 @@ const CartItemList = () => {
 	if (!isLoaded) {
 		return <div>Loading...</div>; // Show a loading state while the request is being processed
 	}
+
+	const totalShipmentAmount = cartItems.reduce((total, cartItem) => {
+		return total + (cartItem.price || 0);
+	}, 0);
+
+	const totalQuantity = cartItems.reduce((total, cartItem) => {
+		return total + (cartItem.quantity || 0);
+	}, 0);
 
 	return (
 		<>
@@ -67,7 +84,7 @@ const CartItemList = () => {
 						className="w-full h-full object-cover rounded-md"
 					/>
 				</div>
-				<span>{companyData.companyName}</span>
+				<span>{companyData?.companyName}</span>
 			</div>
 			<div className="flex flex-col items-center p-2">
 				{cartItems.length > 0 ? (
@@ -108,7 +125,6 @@ const CartItemList = () => {
 };
 
 CartItemList.propTypes = {
-	// Define prop types if necessary
 };
 
 export default CartItemList;
