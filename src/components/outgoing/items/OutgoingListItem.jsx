@@ -5,12 +5,19 @@ import { tradeIcon } from '../../../constants/trade/trade.image';
 import { useNavigate } from 'react-router-dom';
 
 
-const OutgoingListItem = () => {
+const OutgoingListItem = ({outgoing}) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/outgoings/${1}`);
+        navigate(`/outgoings/${outgoing.outgoingId}`);
     };
+
+    const status = {
+        'PENDING' : '출고요청',
+        'READY' : '출고대기',
+        'COMPLETE' : '출고완료',
+        'REJECT' : '출고거절'
+    }
 
     return (
         <div className='w-full flex flex-col p-5 gap-3' onClick={handleClick}>
@@ -25,13 +32,13 @@ const OutgoingListItem = () => {
                     </div>
                 </div>
                 <div className='flex flex-col w-4/5 gap-1'>
-                    <div className='font-bold text-xl'>여보소 수산</div>
+                    <div className='font-bold text-xl'>{outgoing.company.companyName}</div>
                     <div className='flex gap-3'>
-                        <span>넙치 외 3건</span>
-                        <span>380000원</span>
+                        <span>{outgoing.title}</span>
+                        <span>{`${outgoing.price.toLocaleString()}원`}</span>
                     </div>
                     <div className='border-2 border-blue-500 rounded-2xl w-5/12 text-center'>
-                        <span className='font-bold'>출고 완료</span>
+                        <span className='font-bold'>{status[outgoing.state]}</span>
                     </div>
                 </div>
             </div>
