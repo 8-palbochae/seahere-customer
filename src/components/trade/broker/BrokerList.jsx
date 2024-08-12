@@ -4,15 +4,16 @@ import axios from 'axios';
 import BrokerInfo from './BrokerInfo';
 import { url } from '../../../constants/defaultUrl';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { axiosInstance } from '../../../api/common/axiosInstance';
 
 const fetchCompanies = async ({ pageParam = 1, size = 10, searchWord = "" }) => {
-  const response = await axios.get(`${url}/companies`, {
+  const response = await axiosInstance.get(`${url}/companies`, {
     params: { page: pageParam, size, searchWord },
   });
   return response.data;
 };
 
-const BrokerList = ({ searchQuery="", size = 10 }) => {
+const BrokerList = ({ searchQuery = "", size = 10 }) => {
   const [currentSearchTerm, setCurrentSearchTerm] = useState(searchQuery);
   const loadMoreRef = useRef(null);
 
@@ -76,7 +77,7 @@ const BrokerList = ({ searchQuery="", size = 10 }) => {
 };
 
 BrokerList.propTypes = {
-  searchQuery: PropTypes.string.isRequired, 
+  searchQuery: PropTypes.string.isRequired,
   size: PropTypes.number,
 };
 

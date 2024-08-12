@@ -7,10 +7,11 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import useCartStore from '../../../stores/cart';
 import { SyncLoader } from 'react-spinners';
+import { axiosInstance } from "../../../api/common/axiosInstance";
 
 const fetchCompanies = async ({ pageParam = 1, size = 10, companyId = null }) => {
   try {
-    const response = await axios.get(`${url}/inventories/${companyId}`, {
+    const response = await axiosInstance.get(`${url}/inventories/${companyId}`, {
       params: { page: pageParam, size },
     });
 
@@ -26,15 +27,15 @@ const fetchCompanies = async ({ pageParam = 1, size = 10, companyId = null }) =>
   }
 };
 
-const BrokerInventory = ({ id , company}) => {
+const BrokerInventory = ({ id, company }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedInventory, setSelectedInventory] = useState(null);
   const navigate = useNavigate();
   const loadMoreRef = useRef(null);
 
-   const { cartItems } = useCartStore(state => ({
-        cartItems: state.cartItems,
-    }));
+  const { cartItems } = useCartStore(state => ({
+    cartItems: state.cartItems,
+  }));
 
 
   const {
@@ -60,10 +61,10 @@ const BrokerInventory = ({ id , company}) => {
 
   const handleCloseModal = () => setIsModalOpen(false);
 
- const handleClickCart = () => {
+  const handleClickCart = () => {
     const currentPath = window.location.pathname;
     localStorage.setItem('previousPath', currentPath);
-    navigate("/carts"  , { state: { company } });
+    navigate("/carts", { state: { company } });
   };
 
   const handleObserver = (entries) => {
@@ -97,7 +98,7 @@ const BrokerInventory = ({ id , company}) => {
   if (status === 'loading') {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <SyncLoader/>
+        <SyncLoader />
       </div>
     );
   }
@@ -126,9 +127,9 @@ const BrokerInventory = ({ id , company}) => {
         </div>
 
         {isModalOpen && selectedInventory && (
-          <CartModal 
-            isOpen={isModalOpen} 
-            onClose={handleCloseModal} 
+          <CartModal
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
             inventory={selectedInventory}
             companyId={id} // inventory가 null이 아닐 때만
           >
@@ -139,17 +140,17 @@ const BrokerInventory = ({ id , company}) => {
         )}
       </div>
 
-			{/* Button Positioned at the Bottom of the Viewport */}
-			<div className="fixed bottom-16 left-0 w-full px-4 pb-3 z-50 bg-white outline-none">
-				<button
-					className="bg-blue-600 w-full text-white h-full p-3 font-bold rounded-md"
-					onClick={handleClickCart}
-				>
-					{`도움 요청 목록 ${cartItems.length}건`}
-				</button>
-			</div>
-		</>
-	);
+      {/* Button Positioned at the Bottom of the Viewport */}
+      <div className="fixed bottom-16 left-0 w-full px-4 pb-3 z-50 bg-white outline-none">
+        <button
+          className="bg-blue-600 w-full text-white h-full p-3 font-bold rounded-md"
+          onClick={handleClickCart}
+        >
+          {`도움 요청 목록 ${cartItems.length}건`}
+        </button>
+      </div>
+    </>
+  );
 };
 
 export default BrokerInventory;

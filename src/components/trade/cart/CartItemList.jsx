@@ -4,11 +4,12 @@ import CartItem from './CartItem';
 import useCartStore from '../../../stores/cart';
 import { url } from '../../../constants/defaultUrl';
 import { tradeIcon } from '../../../constants/trade/trade.image';
+import { axiosInstance } from '../../../api/common/axiosInstance';
 
 const CartItemList = () => {
     const { cartItems, company } = useCartStore((state) => ({
         cartItems: state.cartItems,
-        company : state.company
+        company: state.company
     }));
 
     const [isLoaded, setIsLoaded] = useState(false);
@@ -20,10 +21,9 @@ const CartItemList = () => {
         if (company) {
             const fetchData = async () => {
                 try {
-                    const response = await fetch(`${url}/companies/${company}`);
+                    const response = await axiosInstance.get(`${url}/companies/${company}`);
                     if (response.status === 200) {
-                        const data = await response.json();
-                        console.log(data);
+                        const data = response.data;
                         setCompanyData(data);  // Store the fetched data in state
                         setIsLoaded(true);
                     } else {
@@ -58,7 +58,7 @@ const CartItemList = () => {
     return (
         <>
             <div className='flex w-full text-left font-bold text-xl ml-4 mt-4 mb-2 justify-start gap-3 items-center'>
-                 <div className='w-6 h-6'>
+                <div className='w-6 h-6'>
                     <img src={tradeIcon.brokerLogo} alt="" className='w-full h-full object-cover rounded-md' />
                 </div>
                 <span>{companyData.companyName}</span>
@@ -66,7 +66,7 @@ const CartItemList = () => {
             <div className='flex flex-col items-center p-2'>
                 {cartItems.length > 0 ? (
                     cartItems.map((cartItem) => (
-                        <CartItem key={cartItem.id} cartItem={cartItem}/>
+                        <CartItem key={cartItem.id} cartItem={cartItem} />
                     ))
                 ) : (
                     <div className='text-gray-500'>장바구니에 항목이 없습니다.</div>
