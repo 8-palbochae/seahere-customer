@@ -29,6 +29,10 @@ import {
 import {
 	SignUpInfo,
 } from "./components/login_signup";
+import Outgoing from './pages/Outgoing.jsx'
+import { pad2 } from './../node_modules/@ctrl/tinycolor/dist/module/util';
+import OutgoingList from './components/outgoing/page/OutgoingList.jsx'
+import OutgoingDetailList from './components/outgoing/page/OutgoingDetailList.jsx'
 
 function App() {
   return (
@@ -47,11 +51,17 @@ function App() {
                     <Route path="users" element={<UserInfoSetting />} />
                     <Route path="password" element={<PasswordChange />} />
                   </Route>
+
                   <Route path="/main" element={<CustomerMain />}/>
 
                   <Route path="/trades" element={<TradeView />}>
                     <Route path="" element={<TradeMain />} />
                     <Route path="broker/:brokerId" element={<TradeBrokerMain />} />
+                  </Route>
+
+                  <Route path='/outgoings' element={<Outgoing/>}>
+                    <Route path='' element={<OutgoingList/>}/>
+                    <Route path=':outgoingId' element={<OutgoingDetailList/>}/>
                   </Route>
 
                   <Route path="/carts" element={<Cart />} />
