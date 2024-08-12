@@ -39,53 +39,49 @@ function App() {
 								element={<SocialLoading />}
 							/>
 							<Route path="/signup" element={<SignUpInfo />} />
+							<Route element={<PrivateRoute />}>
+								<Route element={<Layout />}>
+									<Route path="/setting" element={<Setting />}>
+										<Route path="" element={<MainSetting />} />
+										<Route
+											path="users"
+											element={<UserInfoSetting />}
+										/>
+										<Route
+											path="password"
+											element={<PasswordChange />}
+										/>
+									</Route>
 
-							<Route element={<Layout />}>
-								<Route path="/setting" element={<Setting />}>
-									<Route path="" element={<MainSetting />} />
 									<Route
-										path="users"
-										element={<UserInfoSetting />}
+										path="/"
+										element={<CustomerMain />}
 									/>
+
+									<Route path="/trades" element={<TradeView />}>
+										<Route path="" element={<TradeMain />} />
+										<Route
+											path="broker/:brokerId"
+											element={<TradeBrokerMain />}
+										/>
+									</Route>
+
+									<Route path="/outgoings" element={<Outgoing />}>
+										<Route path="" element={<OutgoingList />} />
+										<Route
+											path=":outgoingId"
+											element={<OutgoingDetailList />}
+										/>
+									</Route>
+
+									<Route path="/carts" element={<Cart />} />
 									<Route
-										path="password"
-										element={<PasswordChange />}
+										path="/alarm-history"
+										element={<AlarmHistory />}
 									/>
 								</Route>
-
-								<Route
-									path="/main"
-									element={<CustomerMain />}
-								/>
-
-								<Route path="/trades" element={<TradeView />}>
-									<Route path="" element={<TradeMain />} />
-									<Route
-										path="broker/:brokerId"
-										element={<TradeBrokerMain />}
-									/>
-								</Route>
-
-								<Route path="/outgoings" element={<Outgoing />}>
-									<Route path="" element={<OutgoingList />} />
-									<Route
-										path=":outgoingId"
-										element={<OutgoingDetailList />}
-									/>
-								</Route>
-
-								<Route path="/carts" element={<Cart />} />
-								<Route
-									path="/alarm-history"
-									element={<AlarmHistory />}
-								/>
 							</Route>
-
-							{/* 테스트 라우트 - 로그인 상태와 관계없이 접근 가능 */}
-							<Route
-								path="test"
-								element={<AxiosInstanceTest />}
-							/>
+					
 						</Routes>
 					</BrowserRouter>
 				</TokenProvider>

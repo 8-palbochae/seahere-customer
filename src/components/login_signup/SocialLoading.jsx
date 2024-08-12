@@ -25,7 +25,7 @@ const SocialLoading = () => {
 
   useEffect(() => {
     if (accessToken && refreshToken) {
-      navigate("/main");
+      navigate("/");
     } else if (accessToken === null && refreshToken === null) {
       setLoading(true);
     }

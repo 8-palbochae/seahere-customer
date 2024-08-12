@@ -68,7 +68,7 @@ const LoginChoice = () => {
       setAccessToken(access);
       setRefreshToken(refresh);
       if (access && refresh) {
-        navigate("/main");
+        navigate("/");
       }
     } catch (error) {
       setErrorMessage(error.message);

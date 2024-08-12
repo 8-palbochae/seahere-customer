@@ -40,7 +40,7 @@ const sendOutgoingRequest = async (outgoingRequests) => {
 
         if(response.status === 200){
           clearCart();
-          navigate('/main');
+          navigate('/');
           alert("출고 요청 성공");
         }
 
