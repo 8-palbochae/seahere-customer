@@ -2,12 +2,22 @@ import React from "react";
 import SettingItem from "./SettingItem";
 import settingIcon from "../../../constants/setting/setting.image";
 import { useNavigate } from "react-router-dom";
+import { useAuthenticationStore } from '../../../stores/authentication';
 
 const SettingList = () => {
 	const navigate = useNavigate();
+	const { setAccessToken , setRefreshToken} = useAuthenticationStore();
+
 	const onClick = (page) => {
 		navigate(page);
 	};
+
+	const onClikcLogout = () => {
+		setAccessToken(null);
+		setRefreshToken(null);
+		navigate("/login");
+	}
+
 	return (
 		<div className="flex flex-col  w-full h-full">
 			<div onClick={() => onClick("/setting/alarms")}>
@@ -31,7 +41,7 @@ const SettingList = () => {
 			<div onClick={() => onClick("/setting/qr")}>
 				<SettingItem type={"QR 정보"} svg={settingIcon.qrIcon} />
 			</div>
-			<div onClick={() => onClick("")}>
+			<div onClick={() => onClikcLogout()}>
 				<SettingItem type={"로그아웃"} svg={settingIcon.logoutIcon} />
 			</div>
 		</div>
