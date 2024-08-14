@@ -49,7 +49,7 @@ const postEmailLogin = async (loginInfo) => {
 
 const authenticationGet = async () => {
     try {
-        const response = await axios.get('http://localhost:8080/authentication/protected', {
+        const response = await axios.get(`${url}/authentication/protected`, {
             headers: {
                 'Accept': 'application/json' 
             },
