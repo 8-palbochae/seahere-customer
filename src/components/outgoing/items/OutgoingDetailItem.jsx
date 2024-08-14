@@ -8,7 +8,7 @@ const OutgoingDetailItem = ({detail}) => {
             <div className='font-bold text-sm w-1/5 text-center border border-gray-400 rounded-xl'>출고 확정</div>
             <div className='flex gap-4 justify-start'>
                 <div className='w-20 h-20'>
-                    <img src={tradeIcon.brokerLogo} className='w-full h-full object-cover rounded-lg' alt="" />
+                    <img src={detail.productImg} className='w-full h-full object-cover rounded-lg' alt="" />
                 </div>
                 <div className='flex flex-col items-center'>
                     <div className='w-full font-bold text-xl'>{detail.productName}</div>

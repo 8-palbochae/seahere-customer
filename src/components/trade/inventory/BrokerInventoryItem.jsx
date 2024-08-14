@@ -11,7 +11,7 @@ const BrokerInventoryItem = ({ inventory }) => {
                 {/* Square container for image */}
                 <div className='relative w-14 h-14'>
                     <img 
-                        src={tradeIcon.brokerLogo} // Using inventory.imgUrl if available
+                        src={inventory.imgUrl} 
                         className='w-full h-full object-cover rounded-md' 
                         alt="Trade Icon" 
                     />

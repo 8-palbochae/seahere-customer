@@ -29,7 +29,10 @@ const RecommandBroker = () => {
 
     if (query.isLoading) return <div>Loading...</div>;
     if (query.error) return <div>Error: {query.error.message || 'Failed to fetch data'}</div>;
-    console.log('Query data:', query.data);
+    if (!query.data) {
+            return <div>No company data available.</div>;
+    } 
+
     const {id,companyName,address,profileImage} = query.data;
     const company = {
         id:id,

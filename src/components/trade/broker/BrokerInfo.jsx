@@ -29,9 +29,9 @@ const BrokerInfo = ({ company }) => {
                     alt="Broker Logo" 
                 />
             </div>
-            <div className='flex flex-col justify-between items-start gap-2 w-full'>
+            <div className='flex flex-col justify-between items-start gap-2 w-3/5'>
                 <div className='text-lg font-bold overflow-hidden whitespace-nowrap text-ellipsis'>{companyName}</div>
-                <div className='text-sm overflow-hidden whitespace-nowrap text-ellipsis'>{`${address.mainAddress} ${address.subAddress}`}</div>
+                <div className='w-4/5 text-sm overflow-hidden whitespace-nowrap text-ellipsis'>{`${address.mainAddress} ${address.subAddress}`}</div>
                 <div className='overflow-hidden whitespace-nowrap text-ellipsis'>{address.postCode}</div>
             </div>
             <div className='absolute bottom-0 right-0 mb-2 mr-2'>

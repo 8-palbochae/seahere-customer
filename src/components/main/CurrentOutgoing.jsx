@@ -29,7 +29,7 @@ const CurrentOutgoing = () => {
 
     if (query.isLoading) return <div>Loading...</div>;
     if (query.error) return <div>Error: {query.error.message || 'Failed to fetch data'}</div>;
-    console.log('최근:', query.data);
+    const data = query.data;
 
     if (!query.data.outgoingId) {
         return (
@@ -59,11 +59,11 @@ const CurrentOutgoing = () => {
                         alt="Broker Logo" 
                         />
                     </div>
-                    <p className='w-full text-center'>테스트 수산</p>
+                    <p className='w-full text-center'>{data.company.companyName}</p>
                     <div className='w-full flex flex-col'>
                         <div className='border-t-2 border-gray-300 w-full'></div>
-                        <p className='text-gray-800 w-full text-center mt-2'>{dayjs().format('YYYY-MM-DD')}</p>
-                        <p className='text-gray-800 w-full text-center mt-2'>넙치 외 3건</p>
+                        <p className='text-gray-800 w-full text-center mt-2'>{data.outgoingDate}</p>
+                        <p className='text-gray-800 w-full text-center mt-2'>{data.title}</p>
                     </div>
                 </div>  
             </div>   
