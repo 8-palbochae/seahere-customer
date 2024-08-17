@@ -43,7 +43,6 @@ const useFCM = () => {
 							);
 						});
 
-					// Listen for messages from the service worker
 					navigator.serviceWorker.addEventListener(
 						"message",
 						function (event) {
@@ -54,7 +53,6 @@ const useFCM = () => {
 								const notificationData = event.data.data;
 
 								if (notificationData && notificationData.url) {
-									// Use Axios to send a request to the server with the notification data
 									axiosInstance
 										.post(notificationData.url, {
 											message:

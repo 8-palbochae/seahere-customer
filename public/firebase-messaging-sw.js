@@ -35,17 +35,15 @@ messaging.onBackgroundMessage((payload) => {
 });
 
 self.addEventListener("notificationclick", function (event) {
-	event.notification.close(); // 알림을 닫음
+	event.notification.close();
 
 	const notificationData = event.notification.data;
 
-	// 이벤트를 브라우저 측으로 전달
 	if (notificationData) {
 		event.waitUntil(
 			clients
 				.matchAll({ type: "window", includeUncontrolled: true })
 				.then((windowClients) => {
-					// 열린 창이 있으면 포커스
 					if (windowClients.length > 0) {
 						windowClients[0].postMessage({
 							type: "NOTIFICATION_CLICKED",
@@ -54,7 +52,6 @@ self.addEventListener("notificationclick", function (event) {
 						return windowClients[0].focus();
 					}
 
-					// 없다면 새로운 창을 열고 메시지 전달
 					return clients.openWindow("/").then((windowClient) => {
 						if (windowClient) {
 							windowClient.postMessage({
