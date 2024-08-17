@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { messaging, getToken } from "../../firebase";
 import { useToken } from "./TokenContext";
+import { axiosInstance } from "../../api/common/axiosInstance";
 
 const useFCM = () => {
 	const { setToken } = useToken();
@@ -41,6 +42,40 @@ const useFCM = () => {
 								err
 							);
 						});
+
+					// Listen for messages from the service worker
+					navigator.serviceWorker.addEventListener(
+						"message",
+						function (event) {
+							if (
+								event.data &&
+								event.data.type === "NOTIFICATION_CLICKED"
+							) {
+								const notificationData = event.data.data;
+
+								if (notificationData && notificationData.url) {
+									// Use Axios to send a request to the server with the notification data
+									axiosInstance
+										.post(notificationData.url, {
+											message:
+												"User clicked the notification",
+										})
+										.then((response) => {
+											console.log(
+												"Log successfully sent:",
+												response.data
+											);
+										})
+										.catch((error) => {
+											console.error(
+												"Error sending log:",
+												error
+											);
+										});
+								}
+							}
+						}
+					);
 				})
 				.catch((err) => {
 					console.error("Service Worker registration failed: ", err);

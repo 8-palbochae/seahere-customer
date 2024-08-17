@@ -28,7 +28,42 @@ messaging.onBackgroundMessage((payload) => {
 	const notificationOptions = {
 		body: payload.notification.body,
 		icon: payload.notification.icon,
+		data: payload.data,
 	};
 
 	self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
+self.addEventListener("notificationclick", function (event) {
+	event.notification.close(); // 알림을 닫음
+
+	const notificationData = event.notification.data;
+
+	// 이벤트를 브라우저 측으로 전달
+	if (notificationData) {
+		event.waitUntil(
+			clients
+				.matchAll({ type: "window", includeUncontrolled: true })
+				.then((windowClients) => {
+					// 열린 창이 있으면 포커스
+					if (windowClients.length > 0) {
+						windowClients[0].postMessage({
+							type: "NOTIFICATION_CLICKED",
+							data: notificationData,
+						});
+						return windowClients[0].focus();
+					}
+
+					// 없다면 새로운 창을 열고 메시지 전달
+					return clients.openWindow("/").then((windowClient) => {
+						if (windowClient) {
+							windowClient.postMessage({
+								type: "NOTIFICATION_CLICKED",
+								data: notificationData,
+							});
+						}
+					});
+				})
+		);
+	}
 });
