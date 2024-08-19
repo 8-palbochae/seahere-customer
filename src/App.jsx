@@ -7,16 +7,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { TradeMain, TradeBrokerMain } from "./components/trade";
 import AlarmHistory from "./components/common/header/AlarmHistory";
 import CustomerMain from "./components/main/CustomerMain.jsx";
-import AxiosInstanceTest from "./components/common/AxiosInstanceTest";
 import PrivateRoute from "./components/common/PrivateRoute";
 import SocialLoading from "./components/login_signup/SocialLoading";
 
 import { LoginChoice, Layout, Setting, Main, TradeView, Cart } from "./pages";
 
 import {
-	MainSetting,
-	UserInfoSetting,
-	PasswordChange,
+	SettingMain,
 } from "./components/setting";
 
 import { SignUpInfo } from "./components/login_signup";
@@ -42,15 +39,8 @@ function App() {
 							<Route element={<PrivateRoute />}>
 								<Route element={<Layout />}>
 									<Route path="/setting" element={<Setting />}>
-										<Route path="" element={<MainSetting />} />
-										<Route
-											path="users"
-											element={<UserInfoSetting />}
-										/>
-										<Route
-											path="password"
-											element={<PasswordChange />}
-										/>
+										<Route path="" element={<SettingMain />} />
+										
 									</Route>
 
 									<Route
