@@ -14,11 +14,13 @@ import { LoginChoice, Layout, Setting, Main, TradeView, Cart } from "./pages";
 
 import {
 	SettingMain,
+	EditTelNumber,
+	EditPassword,
+	EditAddress,
 } from "./components/setting";
 
 import { SignUpInfo } from "./components/login_signup";
 import Outgoing from "./pages/Outgoing.jsx";
-import { pad2 } from "./../node_modules/@ctrl/tinycolor/dist/module/util";
 import OutgoingList from "./components/outgoing/page/OutgoingList.jsx";
 import OutgoingDetailList from "./components/outgoing/page/OutgoingDetailList.jsx";
 import { TokenProvider } from "./hooks/fcm/TokenContext";
@@ -40,7 +42,9 @@ function App() {
 								<Route element={<Layout />}>
 									<Route path="/setting" element={<Setting />}>
 										<Route path="" element={<SettingMain />} />
-										
+										<Route path='edit/telnumber' element={<EditTelNumber/>}/>
+										<Route path='edit/password' element={<EditPassword/>}/>
+										<Route path='edit/address' element={<EditAddress/>}/>
 									</Route>
 
 									<Route
