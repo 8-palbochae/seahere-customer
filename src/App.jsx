@@ -1,13 +1,10 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import appLogo from "/favicon.svg";
 import PWABadge from "./PWABadge.jsx";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { TradeMain, TradeBrokerMain } from "./components/trade";
 import AlarmHistory from "./components/common/header/AlarmHistory";
 import CustomerMain from "./components/main/CustomerMain.jsx";
-import AxiosInstanceTest from "./components/common/AxiosInstanceTest";
+import FollowMain from "./components/trade/FollowMain.jsx";
 import PrivateRoute from "./components/common/PrivateRoute";
 import SocialLoading from "./components/login_signup/SocialLoading";
 
@@ -25,6 +22,7 @@ import { pad2 } from "./../node_modules/@ctrl/tinycolor/dist/module/util";
 import OutgoingList from "./components/outgoing/page/OutgoingList.jsx";
 import OutgoingDetailList from "./components/outgoing/page/OutgoingDetailList.jsx";
 import { TokenProvider } from "./hooks/fcm/TokenContext";
+import FollowList from "./components/trade/broker/FollowList.jsx";
 function App() {
 	return (
 		<>
@@ -58,6 +56,10 @@ function App() {
 										element={<CustomerMain />}
 									/>
 
+									<Route path="/following"
+										element={<FollowMain />}
+									/>
+
 									<Route path="/trades" element={<TradeView />}>
 										<Route path="" element={<TradeMain />} />
 										<Route
@@ -81,7 +83,7 @@ function App() {
 									/>
 								</Route>
 							</Route>
-					
+
 						</Routes>
 					</BrowserRouter>
 				</TokenProvider>

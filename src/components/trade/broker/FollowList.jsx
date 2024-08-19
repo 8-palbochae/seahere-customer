@@ -5,29 +5,33 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../../../api/common/axiosInstance";
 
 const fetchCompanies = async ({ pageParam = 1, size = 10, searchWord = "" }) => {
-	const response = await axiosInstance.get(`/companies/c`, {
-		params: { page: pageParam, size, searchWord },
-	});
-	return response.data;
+	try {
+		const response = await axiosInstance.get(`/companies/c/follow`, {
+			params: { page: pageParam, size, searchWord },
+		});
+		return response.data;
+	} catch (error) {
+		console.error("Error fetching companies:", error);
+		throw error;
+	}
 };
 
-const BrokerList = ({ searchQuery = "", size = 10 }) => {
+const FollowList = ({ searchQuery = "", size = 10 }) => {
 	const [currentSearchTerm, setCurrentSearchTerm] = useState(searchQuery);
 	const loadMoreRef = useRef(null);
 
-	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
-		useInfiniteQuery({
-			queryKey: ["brokerList", size, currentSearchTerm],
-			queryFn: ({ pageParam = 1 }) =>
-				fetchCompanies({
-					pageParam,
-					size,
-					searchWord: currentSearchTerm,
-				}),
-			getNextPageParam: (lastPage, pages) => {
-				return lastPage.length === size ? pages.length + 1 : undefined;
-			},
-		});
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteQuery({
+		queryKey: ["followList", size, currentSearchTerm],
+		queryFn: ({ pageParam = 1 }) =>
+			fetchCompanies({
+				pageParam,
+				size,
+				searchWord: currentSearchTerm,
+			}),
+		getNextPageParam: (lastPage, pages) => {
+			return lastPage.length === size ? pages.length + 1 : undefined;
+		},
+	});
 
 	useEffect(() => {
 		const options = {
@@ -63,9 +67,12 @@ const BrokerList = ({ searchQuery = "", size = 10 }) => {
 	const companies = data?.pages.flatMap((page) => page) || [];
 
 	return (
-		<div className="flex flex-col items-center my-2 w-11/12">
+		<div className="flex flex-col items-center my-2 w-11/12"> {/* TradeMain과 동일한 스타일 적용 */}
 			{companies.map((company) => (
-				<BrokerInfo key={company.id} company={{ ...company, isFollowed: company.followed !== undefined ? company.followed : false }} />
+				<BrokerInfo
+					key={company.id}
+					company={{ ...company, isFollowed: company.followed !== undefined ? company.followed : false }}
+				/>
 			))}
 			<div
 				ref={loadMoreRef}
@@ -77,9 +84,9 @@ const BrokerList = ({ searchQuery = "", size = 10 }) => {
 	);
 };
 
-BrokerList.propTypes = {
-	searchQuery: PropTypes.string.isRequired,
+FollowList.propTypes = {
+	searchQuery: PropTypes.string,
 	size: PropTypes.number,
 };
 
-export default BrokerList;
+export default FollowList;

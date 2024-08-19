@@ -6,6 +6,9 @@ const Bottom = () => {
 	const navigate = useNavigate();
 	const onClick = (page) => {
 		navigate(page);
+		if (page === '') {
+			window.location.reload();
+		}
 	};
 	return (
 		<div className="flex flex-row justify-between w-full bottom-0 border-t  border-gray-300 bg-white">
