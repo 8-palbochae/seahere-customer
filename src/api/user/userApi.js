@@ -1,5 +1,6 @@
 import axios from "axios";
 import { url } from "../../constants/defaultUrl";
+import { axiosInstance } from '../common/axiosInstance';
 
 const postUser = async (userInfo, type) => {
     const body = {
@@ -95,4 +96,17 @@ const postSocialUser = async (socialUser) => {
     }
 };
 
-export { postUser, postSocialUser };
+const getUserInfo = async () => {
+        try {
+            const response = await axiosInstance.get('/users/myinfo');
+            if (response.status === 200) {
+                return response.data;
+            } else {
+                console.error('Unexpected response status:', response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching user info:', error);
+        }
+    };
+
+export { postUser, postSocialUser,getUserInfo };
