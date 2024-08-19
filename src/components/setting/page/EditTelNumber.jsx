@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { getUserInfo } from '../../../api/user/userApi';
 
 const EditTelNumber = () => {
     const [telNumber, setTelNumber] = useState('');
     const [formattedTelNumber, setFormattedTelNumber] = useState('');
+
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            try {
+                const userData = await getUserInfo();
+                setLoading(false);
+            } catch (error) {
+                setError(error.message || 'Error fetching user data');
+                setLoading(false);
+            }
+        };
+
+        fetchUserInfo();
+    }, []);
 
     const formatTelNumber = (value) => {
         const cleanedValue = value.replace(/\D/g, '');
