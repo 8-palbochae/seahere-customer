@@ -67,7 +67,7 @@ const FollowList = ({ searchQuery = "", size = 10 }) => {
 	const companies = data?.pages.flatMap((page) => page) || [];
 
 	return (
-		<div className="flex flex-col items-center my-2 w-11/12"> {/* TradeMain과 동일한 스타일 적용 */}
+		<div className="flex flex-col items-center my-2 w-11/12">
 			{companies.map((company) => (
 				<BrokerInfo
 					key={company.id}
