@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import BrokerSearchInput from '../common/BrokerSearchInput';
-import BrokerList from './broker/BrokerList';
+import FollowList from './broker/FollowList';
 
-const TradeMain = () => {
+const FollowMain = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
     <div className='flex flex-col items-center'>
       <BrokerSearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      <BrokerList searchQuery={searchQuery} />
+      <FollowList searchQuery={searchQuery} />
     </div>
   );
 };
 
-export default TradeMain;
+export default FollowMain;

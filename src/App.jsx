@@ -1,12 +1,10 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import appLogo from "/favicon.svg";
 import PWABadge from "./PWABadge.jsx";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { TradeMain, TradeBrokerMain } from "./components/trade";
 import AlarmHistory from "./components/common/header/AlarmHistory";
 import CustomerMain from "./components/main/CustomerMain.jsx";
+import FollowMain from "./components/trade/FollowMain.jsx";
 import PrivateRoute from "./components/common/PrivateRoute";
 import SocialLoading from "./components/login_signup/SocialLoading";
 
@@ -24,6 +22,7 @@ import Outgoing from "./pages/Outgoing.jsx";
 import OutgoingList from "./components/outgoing/page/OutgoingList.jsx";
 import OutgoingDetailList from "./components/outgoing/page/OutgoingDetailList.jsx";
 import { TokenProvider } from "./hooks/fcm/TokenContext";
+import FollowList from "./components/trade/broker/FollowList.jsx";
 function App() {
 	return (
 		<>
@@ -42,14 +41,18 @@ function App() {
 								<Route element={<Layout />}>
 									<Route path="/setting" element={<Setting />}>
 										<Route path="" element={<SettingMain />} />
-										<Route path='edit/telnumber' element={<EditTelNumber/>}/>
-										<Route path='edit/password' element={<EditPassword/>}/>
-										<Route path='edit/address' element={<EditAddress/>}/>
+										<Route path='edit/telnumber' element={<EditTelNumber />} />
+										<Route path='edit/password' element={<EditPassword />} />
+										<Route path='edit/address' element={<EditAddress />} />
 									</Route>
 
 									<Route
 										path="/"
 										element={<CustomerMain />}
+									/>
+
+									<Route path="/following"
+										element={<FollowMain />}
 									/>
 
 									<Route path="/trades" element={<TradeView />}>
@@ -75,7 +78,7 @@ function App() {
 									/>
 								</Route>
 							</Route>
-					
+
 						</Routes>
 					</BrowserRouter>
 				</TokenProvider>
