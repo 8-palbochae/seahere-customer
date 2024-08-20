@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { axiosInstance } from '../../api/common/axiosInstance';
 import BrokerInfo from '../trade/broker/BrokerInfo';
 
+
 const getMostOutgoingCompany = async () => {
   try {
     const response = await axiosInstance.get('/companies/c/best');

@@ -6,7 +6,7 @@ import settingIcon from './../../constants/setting/setting.image';
 import { useNavigate } from 'react-router-dom';
 import { axiosInstance, useAuthenticationStore } from '../../api/common/axiosInstance';
 import { getUserInfo } from '../../api/user/userApi';
-
+import { useHeaderText } from '../../stores/headerText';
 
 const SettingMain = () => {
     const navigate = useNavigate();
@@ -24,7 +24,11 @@ const SettingMain = () => {
             subAddress: ''
         }
     });
+    const { setHeaderText } = useHeaderText();
 
+    useEffect(() => {
+      setHeaderText("설정");
+      }, [setHeaderText]);
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {

@@ -1,12 +1,16 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { tradeIcon } from '../../constants/trade/trade.image';
-
+import { useHeaderText } from '../../stores/headerText';
 const OutgoingSearch = ({ searchWord,setSearchWord}) => {
   const handleChange = (event) => {
     setSearchWord(event.target.value);
   };
+  const { setHeaderText } = useHeaderText();
 
+  useEffect(() => {
+    setHeaderText("출고 내역");
+    }, [setHeaderText]);
   return (
     <div className='flex w-full items-center justify-center'>
       <div className='flex w-full h-11 bg-gray-100 justify-around items-center gap-3 m-2 rounded'>
