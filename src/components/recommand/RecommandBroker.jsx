@@ -1,15 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import BrokerItem from '../trade/broker/BrokerInfo';
-import Company from './../../types/Company';
 import { useQuery } from '@tanstack/react-query';
 import { axiosInstance } from '../../api/common/axiosInstance';
+import BrokerInfo from '../trade/broker/BrokerInfo';
 
 const getMostOutgoingCompany = async () => {
   try {
-    const response = await axiosInstance.get('/companies/best');
+    const response = await axiosInstance.get('/companies/c/best');
     if (response.status === 200) {
-		console.log(response.data);
       return response.data;
     } else {
       console.error('Unexpected status code:', response.status);
@@ -22,31 +19,33 @@ const getMostOutgoingCompany = async () => {
 };
 
 const RecommandBroker = () => {
-    const query = useQuery({
-        queryKey: ['bestCompany'], 
-        queryFn: getMostOutgoingCompany, 
-    });
+  const query = useQuery({
+    queryKey: ['bestCompany'],
+    queryFn: getMostOutgoingCompany,
+  });
 
-    if (query.isLoading) return <div>Loading...</div>;
-    if (query.error) return <div>Error: {query.error.message || 'Failed to fetch data'}</div>;
-    if (!query.data) {
-            return <div>No company data available.</div>;
-    } 
+  if (query.isLoading) return <div>Loading...</div>;
+  if (query.error) return <div>Error: {query.error.message || 'Failed to fetch data'}</div>;
+  if (!query.data) {
+    return <div>No company data available.</div>;
+  }
 
-    const {id,companyName,address,profileImage} = query.data;
-    const company = {
-        id:id,
-        companyName:companyName,
-        address:address,
-        profileImage : profileImage
-    }
-    return (
-        <>
-            <BrokerItem id={'100000'} company={company}/>
-        </>
-    );
+  const { id, companyName, address, profileImage, followed } = query.data;
+
+  const company = {
+    id: id,
+    companyName: companyName,
+    address: address,
+    profileImage: profileImage,
+    isFollowed: followed !== undefined ? followed : false
+  };
+
+  return (
+    <>
+      <BrokerInfo company={company} />
+    </>
+  );
 };
 
-RecommandBroker.propTypes = {};
 
 export default RecommandBroker;

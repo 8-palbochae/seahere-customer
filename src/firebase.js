@@ -29,6 +29,7 @@ if (
 				registration.showNotification(payload.notification.title, {
 					body: payload.notification.body,
 					icon: payload.notification.icon,
+					data: payload.data,
 				});
 			});
 		}

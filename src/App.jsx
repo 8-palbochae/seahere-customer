@@ -1,30 +1,28 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import appLogo from "/favicon.svg";
 import PWABadge from "./PWABadge.jsx";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { TradeMain, TradeBrokerMain } from "./components/trade";
 import AlarmHistory from "./components/common/header/AlarmHistory";
 import CustomerMain from "./components/main/CustomerMain.jsx";
-import AxiosInstanceTest from "./components/common/AxiosInstanceTest";
+import FollowMain from "./components/trade/FollowMain.jsx";
 import PrivateRoute from "./components/common/PrivateRoute";
 import SocialLoading from "./components/login_signup/SocialLoading";
 
 import { LoginChoice, Layout, Setting, Main, TradeView, Cart } from "./pages";
 
 import {
-	MainSetting,
-	UserInfoSetting,
-	PasswordChange,
+	SettingMain,
+	EditTelNumber,
+	EditPassword,
+	EditAddress,
 } from "./components/setting";
 
 import { SignUpInfo } from "./components/login_signup";
 import Outgoing from "./pages/Outgoing.jsx";
-import { pad2 } from "./../node_modules/@ctrl/tinycolor/dist/module/util";
 import OutgoingList from "./components/outgoing/page/OutgoingList.jsx";
 import OutgoingDetailList from "./components/outgoing/page/OutgoingDetailList.jsx";
 import { TokenProvider } from "./hooks/fcm/TokenContext";
+import FollowList from "./components/trade/broker/FollowList.jsx";
 function App() {
 	return (
 		<>
@@ -42,20 +40,19 @@ function App() {
 							<Route element={<PrivateRoute />}>
 								<Route element={<Layout />}>
 									<Route path="/setting" element={<Setting />}>
-										<Route path="" element={<MainSetting />} />
-										<Route
-											path="users"
-											element={<UserInfoSetting />}
-										/>
-										<Route
-											path="password"
-											element={<PasswordChange />}
-										/>
+										<Route path="" element={<SettingMain />} />
+										<Route path='edit/telnumber' element={<EditTelNumber />} />
+										<Route path='edit/password' element={<EditPassword />} />
+										<Route path='edit/address' element={<EditAddress />} />
 									</Route>
 
 									<Route
 										path="/"
 										element={<CustomerMain />}
+									/>
+
+									<Route path="/following"
+										element={<FollowMain />}
 									/>
 
 									<Route path="/trades" element={<TradeView />}>
@@ -81,7 +78,7 @@ function App() {
 									/>
 								</Route>
 							</Route>
-					
+
 						</Routes>
 					</BrowserRouter>
 				</TokenProvider>

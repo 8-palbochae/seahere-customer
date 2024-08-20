@@ -28,7 +28,39 @@ messaging.onBackgroundMessage((payload) => {
 	const notificationOptions = {
 		body: payload.notification.body,
 		icon: payload.notification.icon,
+		data: payload.data,
 	};
 
 	self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
+self.addEventListener("notificationclick", function (event) {
+	event.notification.close();
+
+	const notificationData = event.notification.data;
+
+	if (notificationData) {
+		event.waitUntil(
+			clients
+				.matchAll({ type: "window", includeUncontrolled: true })
+				.then((windowClients) => {
+					if (windowClients.length > 0) {
+						windowClients[0].postMessage({
+							type: "NOTIFICATION_CLICKED",
+							data: notificationData,
+						});
+						return windowClients[0].focus();
+					}
+
+					return clients.openWindow("/").then((windowClient) => {
+						if (windowClient) {
+							windowClient.postMessage({
+								type: "NOTIFICATION_CLICKED",
+								data: notificationData,
+							});
+						}
+					});
+				})
+		);
+	}
 });
