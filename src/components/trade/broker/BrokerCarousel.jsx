@@ -72,7 +72,7 @@ const BrokerCarousel = ({ companies }) => {
 
 BrokerCarousel.propTypes = {
     companies: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired,
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
         companyName: PropTypes.string.isRequired,
         logoUrl: PropTypes.string,
         followed: PropTypes.bool.isRequired,

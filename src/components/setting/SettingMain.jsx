@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { tradeIcon } from '../../constants/trade/trade.image';
-import rightButton from '../../assets/setting/right-button.svg'
+import rightButton from '../../assets/setting/right-button.svg';
 import settingIcon from './../../constants/setting/setting.image';
+import defaultImage from './../../assets/setting/user-profile-default.png';
 import { useNavigate } from 'react-router-dom';
 import { axiosInstance, useAuthenticationStore } from '../../api/common/axiosInstance';
 import { getUserInfo } from '../../api/user/userApi';
+import ProfileSettingModal from './profileSettingModal';
+import { profileUrl } from './profileUrl';
 import { useHeaderText } from '../../stores/headerText';
 
 const SettingMain = () => {
     const navigate = useNavigate();
-    const {setAccessToken, setRefreshToken} = useAuthenticationStore()
-    const [loading, setLoading] = useState(true); // 로딩 상태
-    const [error, setError] = useState(null); // 에러 상태
+    const { setAccessToken, setRefreshToken } = useAuthenticationStore();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [user, setUser] = useState({
         userId: null,
         userName: '',
         email: '',
+        profileImage: '',
         telNumber: '',
         address: {
             postCode: '',
@@ -26,9 +29,11 @@ const SettingMain = () => {
     });
     const { setHeaderText } = useHeaderText();
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     useEffect(() => {
-      setHeaderText("설정");
-      }, [setHeaderText]);
+        setHeaderText("설정");
+    }, [setHeaderText]);
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
@@ -46,15 +51,15 @@ const SettingMain = () => {
 
     const updateTelNumber = (newTelNumber) => {
         setUser(prevState => ({
-            ...prevState, // 이전 상태를 복사
-            telNumber: newTelNumber // 특정 필드를 업데이트
+            ...prevState,
+            telNumber: newTelNumber
         }));
     };
 
     const updateAddress = (newAddress) => {
         setUser(prevState => ({
-            ...prevState, // 이전 상태를 복사
-            address: newAddress // 특정 필드를 업데이트
+            ...prevState,
+            address: newAddress
         }));
     };
 
@@ -65,14 +70,42 @@ const SettingMain = () => {
     const handleLogout = () => {
         setAccessToken(null);
         setRefreshToken(null);
-    }
+    };
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const updateProfileImage = (newImageUrl) => {
+        setUser(prevState => ({
+            ...prevState,
+            profileImage: newImageUrl
+        }));
+    };
 
     return (
         <div className='flex flex-col items-center p-4'>
-             <div className='w-36 h-36 mt-10 relative'>
-                <img className='w-full h-full object-cover rounded-full' src={tradeIcon.brokerLogo} alt="" />
-                <img className='absolute bottom-0 right-0 w-8 h-8 bg-white rounded-full p-1' src={settingIcon.cameraBlackIcon} alt="" />
+            <div className='w-36 h-36 mt-10 relative'>
+                <img
+                    className='w-full h-full object-cover rounded-full'
+                    src={`${user.profileImage ? profileUrl + user.profileImage : defaultImage}`}
+                    alt=""
+                />
+                <img
+                    className='absolute bottom-0 right-0 w-8 h-8 bg-white rounded-full p-1'
+                    src={settingIcon.cameraBlackIcon}
+                    alt=""
+                    onClick={openModal}
+                />
             </div>
+
+            {isModalOpen && (
+                <ProfileSettingModal onClose={closeModal} onUpdateProfileImage={updateProfileImage} />
+            )}
 
             <div className='border border-gray-300 rounded-md w-full mt-10 text-md'>
                 <div className='w-full flex items-center justify-between p-3 border-b border-gray-300'>
@@ -81,7 +114,7 @@ const SettingMain = () => {
                 </div>
                 <div className='w-full flex items-center justify-between p-3 border-b border-gray-300'>
                     <div className='w-3/5 font-bold text-lg'>비밀번호</div>
-                    <img className='w-4 h-4' src={rightButton} alt="" onClick={() => navigate("/setting/edit/password")}/>
+                    <img className='w-4 h-4' src={rightButton} alt="" onClick={() => navigate("/setting/edit/password")} />
                 </div>
                 <div className='w-full flex items-center justify-between p-3 border-b border-gray-300'>
                     <div className='w-3/5 font-bold text-lg'>전화번호</div>
@@ -100,7 +133,7 @@ const SettingMain = () => {
                 </div>
                 <div className='w-full flex items-center justify-between p-3 border-b border-gray-300'>
                     <div className='w-3/5 font-bold text-lg'>팔로우 관리</div>
-                    <img className='w-4 h-4' src={rightButton} alt="" />
+                    <img className='w-4 h-4' src={rightButton} alt="" onClick={() => navigate("/following")} />
                 </div>
             </div>
             <div className='flex mt-24 text-gray-500 gap-3'>

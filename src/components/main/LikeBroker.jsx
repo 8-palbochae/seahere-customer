@@ -35,14 +35,12 @@ const LikeBroker = () => {
         }
     }, [data]);
 
-
     return (
         <div className='flex flex-col w-full h-full'>
             <p className='font-bold text-lg mb-2 ml-1'>💕 관심업체 관리</p>
             <div className='bg-white border border-gray-200 rounded-lg shadow-md p-2 w-full flex-1 overflow-hidden h-28'>
                 <BrokerCarousel companies={companies} />
             </div>
-
         </div>
     );
 };
