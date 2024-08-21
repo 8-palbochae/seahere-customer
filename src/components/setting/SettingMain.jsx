@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { tradeIcon } from '../../constants/trade/trade.image';
 import rightButton from '../../assets/setting/right-button.svg';
 import settingIcon from './../../constants/setting/setting.image';
 import defaultImage from './../../assets/setting/user-profile-default.png';
 import { useNavigate } from 'react-router-dom';
-import { axiosInstance, useAuthenticationStore } from '../../api/common/axiosInstance';
 import { getUserInfo } from '../../api/user/userApi';
 import ProfileSettingModal from './profileSettingModal';
 import { profileUrl } from './profileUrl';
 import { useHeaderText } from '../../stores/headerText';
+import { useAuthenticationStore } from '../../api/common/axiosInstance';
 
 const SettingMain = () => {
     const navigate = useNavigate();
@@ -19,7 +18,7 @@ const SettingMain = () => {
         userId: null,
         userName: '',
         email: '',
-        profileImage: '',
+        profileImg: '',
         telNumber: '',
         address: {
             postCode: '',
@@ -28,12 +27,12 @@ const SettingMain = () => {
         }
     });
     const { setHeaderText } = useHeaderText();
-
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         setHeaderText("설정");
     }, [setHeaderText]);
+
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
@@ -45,7 +44,6 @@ const SettingMain = () => {
                 setLoading(false);
             }
         };
-
         fetchUserInfo();
     }, []);
 
@@ -83,16 +81,20 @@ const SettingMain = () => {
     const updateProfileImage = (newImageUrl) => {
         setUser(prevState => ({
             ...prevState,
-            profileImage: newImageUrl
+            profileImg: newImageUrl
         }));
     };
+
+    useEffect(() => {
+        console.log("Rendering Image with URL:", `${user.profileImg !== null ? profileUrl + user.profileImg + '?' + new Date().getTime() : defaultImage}`);
+    }, [user.profileImage]);
 
     return (
         <div className='flex flex-col items-center p-4'>
             <div className='w-36 h-36 mt-10 relative'>
                 <img
                     className='w-full h-full object-cover rounded-full'
-                    src={`${user.profileImage ? profileUrl + user.profileImage : defaultImage}`}
+                    src={`${user.profileImg !== null ? profileUrl + user.profileImg + '?' + new Date().getTime() : defaultImage}`}
                     alt=""
                 />
                 <img
@@ -144,7 +146,5 @@ const SettingMain = () => {
         </div>
     );
 };
-
-SettingMain.propTypes = {};
 
 export default SettingMain;
