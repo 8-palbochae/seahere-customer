@@ -6,10 +6,17 @@ import { useAuthenticationStore } from '../../stores/authentication';
 import RecommandBroker from '../recommand/RecommandBroker';
 import LikeBroker from './LikeBroker';
 import CurrentOutgoing from './CurrentOutgoing';
+import { useHeaderText } from "../../stores/headerText";
 
 const CustomerMain = () => {
 	const {accessToken,refreshToken,setAccessToken, setRefreshToken, deleteCookie } = useAuthenticationStore();
-
+	
+	const { setHeaderText } = useHeaderText();
+	useEffect(() => {
+		setHeaderText("홈");
+		return () => setHeaderText("메인");
+	}, [setHeaderText]);
+	
 	return (
 		<div className="flex flex-col items-center w-full">
 			<div className="p-2 rounded-[20px] w-full h-1/5">

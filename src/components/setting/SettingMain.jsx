@@ -8,6 +8,7 @@ import { axiosInstance, useAuthenticationStore } from '../../api/common/axiosIns
 import { getUserInfo } from '../../api/user/userApi';
 import ProfileSettingModal from './profileSettingModal';
 import { profileUrl } from './profileUrl';
+import { useHeaderText } from '../../stores/headerText';
 
 const SettingMain = () => {
     const navigate = useNavigate();
@@ -26,9 +27,13 @@ const SettingMain = () => {
             subAddress: ''
         }
     });
+    const { setHeaderText } = useHeaderText();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    useEffect(() => {
+        setHeaderText("설정");
+    }, [setHeaderText]);
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
