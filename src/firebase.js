@@ -28,7 +28,7 @@ if (
 			navigator.serviceWorker.ready.then((registration) => {
 				registration.showNotification(payload.notification.title, {
 					body: payload.notification.body,
-					icon: payload.notification.icon,
+					icon: "/icon/icon.png",
 					data: payload.data,
 				});
 			});
