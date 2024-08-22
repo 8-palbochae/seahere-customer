@@ -1,5 +1,6 @@
 import React from "react";
 import headerIcon from "../../../constants/header/header.image";
+import { useNavigate } from "react-router-dom";
 
 function formatDate(isoString) {
 	const date = new Date(isoString);
@@ -14,12 +15,23 @@ function formatDate(isoString) {
 }
 
 const AlarmInfo = React.forwardRef((props, ref) => {
+	const navigate = useNavigate();
+	console.log(props.alarm);
+	const onClick = () => {
+		if (props.alarm.saleCompanyId !== null) {
+			navigate(`/trades/broker/${props.alarm.saleCompanyId}`);
+		}
+	};
 	return (
 		<div className="flex gap-3 justify-center bg-gray-300 rounded-[20px] w-full p-2">
 			{/* 			<div>
 				<img src={headerIcon.boxIcon} alt="box-icon" />
 			</div> */}
-			<div className="flex flex-col items-center" ref={ref}>
+			<div
+				className="flex flex-col items-center"
+				ref={ref}
+				onClick={onClick}
+			>
 				<div>{props.alarm.title}</div>
 				<div>{props.alarm.body}</div>
 				<div>{formatDate(props.alarm.createTime)}</div>
