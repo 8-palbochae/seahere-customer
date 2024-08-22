@@ -163,7 +163,7 @@ const BrokerInventory = ({ id, company }) => {
 					className="bg-blue-600 w-full text-white h-full p-3 font-bold rounded-md"
 					onClick={handleClickCart}
 				>
-					{`도움 요청 목록 ${cartItems.length}건`}
+					{`출고 요청 목록 ${cartItems.length}건`}
 				</button>
 			</div>
 		</>
