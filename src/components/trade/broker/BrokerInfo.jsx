@@ -14,7 +14,7 @@ const BrokerInfo = ({ company }) => {
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 
-	console.log("comapyn", company);
+
 
 	const handleLikeClick = async (e) => {
 		e.stopPropagation();

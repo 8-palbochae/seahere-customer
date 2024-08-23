@@ -23,7 +23,7 @@ const fetchCompanies = async ({
 		);
 
 		if (response.status === 200) {
-			console.log(response.data);
+		
 			return response.data;
 		} else {
 			throw new Error(`Unexpected response code: ${response.status}`);
@@ -81,9 +81,6 @@ const BrokerInventory = ({ id, company }) => {
 		}
 	};
 
-	// useEffect(() => {
-	// 	window.scrollTo(0, 0);
-	// }, [location]);
 
 	useEffect(() => {
 		const options = {
@@ -144,7 +141,7 @@ const BrokerInventory = ({ id, company }) => {
 						isOpen={isModalOpen}
 						onClose={handleCloseModal}
 						inventory={selectedInventory}
-						companyId={id} // inventory가 null이 아닐 때만
+						companyId={id} 
 					>
 						<div className="p-4 w-full">
 							{selectedInventory && (
@@ -157,7 +154,7 @@ const BrokerInventory = ({ id, company }) => {
 				)}
 			</div>
 
-			{/* Button Positioned at the Bottom of the Viewport */}
+
 			<div className="fixed bottom-16 left-0 w-full px-4 pb-3 z-50 bg-white outline-none">
 				<button
 					className="bg-blue-600 w-full text-white h-full p-3 font-bold rounded-md"

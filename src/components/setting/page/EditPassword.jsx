@@ -7,8 +7,8 @@ const EditPassword = () => {
 	const [password, setPassword] = useState("");
 	const [passwordCheck, setPasswordCheck] = useState("");
 	const { setAccessToken, setRefreshToken } = useAuthenticationStore();
-	const [loading, setLoading] = useState(true); // 로딩 상태
-	const [error, setError] = useState(null); // 에러 상태
+	const [loading, setLoading] = useState(true); 
+	const [error, setError] = useState(null); 
 	const handleInputChange = (e) => {
 		const inputValue = e.target.value;
 		setPassword(inputValue);

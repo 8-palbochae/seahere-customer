@@ -75,7 +75,7 @@ const CartModal = ({ isOpen, onClose, inventory, companyId, children }) => {
                                 type="number" 
                                 value={weight}
                                 onChange={handleWeightChange}
-                                placeholder="0" // 빈 상태에서 '0'을 기본값으로 표시
+                                placeholder="0" 
                             />
                         </div>
                     </div>
