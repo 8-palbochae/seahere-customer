@@ -31,6 +31,6 @@ export const certifyCompany = async (regNumber, ceoName, startDate) => {
         }
     } catch (error) {
         console.log(error)
-        return false; // 에러 발생 시 false 반환
+        return false; 
     }
 };
