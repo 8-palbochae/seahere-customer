@@ -6,13 +6,12 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { axiosInstance } from '../../../api/common/axiosInstance';
 import { url } from '../../../constants/defaultUrl';
 
-// API 호출 함수
+
 const fetchOutgoing = async ({ pageParam = 1, size = 10, searchWord = "" }) => {
     try {
         const response = await axiosInstance.get(`${url}/outgoings/customer`, {
             params: { page: pageParam, size, searchWord },
         });
-        console.log('Fetched data:', response.data);
         return response.data;
     } catch (error) {
         console.error("Error fetching data: ", error);
@@ -20,7 +19,7 @@ const fetchOutgoing = async ({ pageParam = 1, size = 10, searchWord = "" }) => {
     }
 };
 
-// OutgoingList 컴포넌트
+
 const OutgoingList = () => {
     const [searchWord, setSearchWord] = useState('');
     const loadMoreRef = useRef(null);
@@ -76,7 +75,7 @@ const OutgoingList = () => {
             {outgoings.map(outgoing => (
                 <OutgoingListItem key={outgoing.outgoingId} outgoing={outgoing} />
             ))}
-            {/* 로드 모어 감지용 요소 */}
+
             <div ref={loadMoreRef} className="h-10 flex justify-center items-center">
                 {isFetchingNextPage && <p>Loading more...</p>}
             </div>

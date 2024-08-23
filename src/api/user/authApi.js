@@ -15,7 +15,7 @@ const postEmailLogin = async (loginInfo) => {
         });
 
         if(response.status===200){ 
-            const access = response.headers['authorization']; // 서버에서 설정한 헤더 이름으로 변경
+            const access = response.headers['authorization']; 
             const refresh = response.headers['authorization-refresh']; 
 
             return [access, refresh];
@@ -57,7 +57,7 @@ const authenticationGet = async () => {
         });
         
         if(response.status===200){ 
-            const access = response.headers['authorization']; // 서버에서 설정한 헤더 이름으로 변경
+            const access = response.headers['authorization']; 
             const refresh = response.headers['authorization-refresh']; 
             return [access, refresh];
         }

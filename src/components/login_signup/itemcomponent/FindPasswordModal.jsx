@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const FindPasswordModal = () => {
-  const [activeTab, setActiveTab] = useState('id'); // 'id'는 ID 찾기, 'password'는 비밀번호 찾기
+  const [activeTab, setActiveTab] = useState('id');
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);

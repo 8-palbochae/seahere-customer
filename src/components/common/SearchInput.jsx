@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import PropTypes from 'prop-types';
 import { inventoryIcon } from "../../constants/inventory/inventory.image";
 import { getProductList } from "../../api/incoming/incomingApi";
 import { useQuery } from "@tanstack/react-query";
@@ -19,7 +18,7 @@ const SearchInput = ({ value }) => {
 	useEffect(() => {
 		if (!isPending) {
 			if (query.length > 0) {
-				// Filter the data based on the query
+				
 				const filteredSuggestions = data.filter(({ productName }) =>
 					productName.toLowerCase().includes(query.toLowerCase())
 				);
@@ -58,8 +57,6 @@ const SearchInput = ({ value }) => {
 							key={index}
 							className="p-2 cursor-pointer hover:bg-gray-200"
 							onClick={() => {
-								// setQuery(suggestion);
-								// setSuggestions([]);
 								navigate("/incoming", {
 									state: { selectedProduct: suggestion },
 								});

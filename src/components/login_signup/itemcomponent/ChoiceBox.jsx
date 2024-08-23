@@ -1,11 +1,10 @@
-// SignUpOption.jsx
 import { Link } from "react-router-dom";
 import useUserTypeStore from '../../../stores/signupType';
 
 const ChoiceBox = ({ to, onClick , children }) => {
     const handleClick = (event) => {
         if (onClick) {
-          onClick(); // 클릭 핸들러 호출
+          onClick(); 
         }
       };
 

@@ -15,7 +15,7 @@ const CartItem = ({ cartItem }) => {
     }));
 
     const handleQuantityChange = (newQuantity) => {
-        if (newQuantity < 1) return; // Prevent quantity from going below 1
+        if (newQuantity < 1) return;
 
         const updatedItem = { ...cartItem, quantity: newQuantity };
 
@@ -35,7 +35,7 @@ const CartItem = ({ cartItem }) => {
     };
 
     const deleteHandle = () => {
-        removeItem(cartItem.id); // Call removeItem with the cartItem's id
+        removeItem(cartItem.id); 
     };
 
     return (
@@ -55,7 +55,7 @@ const CartItem = ({ cartItem }) => {
                         <button 
                             className='border rounded-full w-8 h-8 font-semibold' 
                             onClick={decreaseHandle}
-                            disabled={cartItem.quantity <= 1} // Disable if quantity is 1 or less
+                            disabled={cartItem.quantity <= 1} 
                         >
                             -
                         </button>

@@ -16,7 +16,6 @@ const OutgoingDetailList = () => {
         const fetchOutgoingDetails = async () => {
             try {
                 const response = await axiosInstance.get(`${url}/outgoings/${outgoingId}`);
-                console.log(response);
                 setOutgoingDetails(response.data);
             } catch (err) {
                 setError(err);

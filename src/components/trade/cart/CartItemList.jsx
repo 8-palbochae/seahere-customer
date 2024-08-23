@@ -15,7 +15,7 @@ const CartItemList = () => {
 
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [error, setError] = useState(null);
-	const [companyData, setCompanyData] = useState(null); // State to store the fetched data
+	const [companyData, setCompanyData] = useState(null); 
 
 	useEffect(() => {
 		if (company !== null) {
@@ -26,7 +26,7 @@ const CartItemList = () => {
 					);
 					if (response.status === 200) {
 						const data = response.data;
-						setCompanyData(data); // Store the fetched data in state
+						setCompanyData(data);
 						setIsLoaded(true);
 					} else {
 						throw new Error("Failed to load data");
@@ -39,7 +39,7 @@ const CartItemList = () => {
 
 			fetchData();
 		} else {
-			setIsLoaded(true); // If company is null, consider the data as loaded
+			setIsLoaded(true);
 		}
 	}, [company]);
 
@@ -63,7 +63,7 @@ const CartItemList = () => {
 	}
 
 	if (!isLoaded) {
-		return <div>Loading...</div>; // Show a loading state while the request is being processed
+		return <div>Loading...</div>; 
 	}
 
 	const totalShipmentAmount = cartItems.reduce((total, cartItem) => {

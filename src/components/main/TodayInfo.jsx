@@ -7,7 +7,7 @@ const fetchTodayInfo = async () => {
   try {
     const response = await axiosInstance.get('/outgoings/customer/today');
     if (response.status === 200) {
-		console.log(response.data);
+
       return response.data;
     } else {
       console.error('Unexpected status code:', response.status);
@@ -27,7 +27,7 @@ const TodayInfo = () => {
 
   if (query.isLoading) return <div>Loading...</div>;
   if (query.error) return <div>Error: {query.error.message || 'Failed to fetch data'}</div>;
- console.log('Query data:', query.data);
+
   const { pending = 0, ready = 0, complete = 0 } = query.data || {};
 
 	return (

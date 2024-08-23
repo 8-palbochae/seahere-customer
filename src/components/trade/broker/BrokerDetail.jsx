@@ -13,7 +13,7 @@ const BrokerDetail = () => {
 	const [selectedItem, setSelectedItem] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 
-	// const company = location.state?.company;
+
 	useEffect(() => {
 		const fetchCompany = async () => {
 			try {
@@ -43,7 +43,7 @@ const BrokerDetail = () => {
 		setSelectedItem(null);
 	};
 	if (isLoading) {
-		return <div>Loading...</div>; // 데이터를 불러오는 동안 표시할 로딩 상태
+		return <div>Loading...</div>; 
 	}
 
 	return (
@@ -55,7 +55,7 @@ const BrokerDetail = () => {
 			<div className="w-full text-left text-gray-500">
 				재고량은 출고 시점과 상이할 수 있습니다
 			</div>
-			{/* <div className='w-full text-xl font-bold my-2'>재고 목록</div> */}
+
 			<BrokerInventory id={brokerId} company={company} />
 		</div>
 	);

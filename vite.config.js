@@ -12,7 +12,7 @@ export default defineConfig({
       srcDir: 'src',
       filename: 'sw.js',
       registerType: 'autoUpdate',
-      injectRegister: 'auto',
+      injectRegister: false,
       manifest: {
         name: 'seahere',
         short_name: 'seahere',
@@ -41,7 +41,7 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,svg,png,ico}']
       },
       devOptions: {
-        enabled: true,
+        enabled: false,
         navigateFallback: 'index.html',
         suppressWarnings: true,
         type: 'module'
