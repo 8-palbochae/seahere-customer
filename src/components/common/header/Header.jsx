@@ -18,7 +18,7 @@ export const Header = () => {
 		setRefreshToken(null);
 	};
 
-	const showLogoutIcon = accessToken && refreshToken; // 액세스 토큰과 리프레시 토큰이 모두 존재할 때
+	const showLogoutIcon = accessToken && refreshToken;
 
 	return (
 		<div>

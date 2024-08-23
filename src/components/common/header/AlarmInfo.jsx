@@ -16,7 +16,7 @@ function formatDate(isoString) {
 
 const AlarmInfo = React.forwardRef((props, ref) => {
 	const navigate = useNavigate();
-	console.log(props.alarm);
+	
 	const onClick = () => {
 		if (props.alarm.saleCompanyId !== null) {
 			navigate(`/trades/broker/${props.alarm.saleCompanyId}`);
@@ -24,9 +24,6 @@ const AlarmInfo = React.forwardRef((props, ref) => {
 	};
 	return (
 		<div className="flex gap-3 justify-center bg-gray-300 rounded-[20px] w-full p-2">
-			{/* 			<div>
-				<img src={headerIcon.boxIcon} alt="box-icon" />
-			</div> */}
 			<div
 				className="flex flex-col items-center"
 				ref={ref}
