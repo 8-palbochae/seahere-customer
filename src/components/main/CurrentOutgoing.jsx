@@ -10,7 +10,6 @@ const getRecentlyOutgoing = async () => {
   try {
     const response = await axiosInstance.get('/outgoings/recent');
     if (response.status === 200) {
-        console.log(response);
       return response.data;
     } else {
       console.error('Unexpected status code:', response.status);
@@ -39,7 +38,7 @@ const CurrentOutgoing = () => {
     
 
     const handleMoving = (id) => {
-        console.log(id);
+
         navigate(`/trades/broker/${id}`,{
             state: {company : query.data.company}
         });
