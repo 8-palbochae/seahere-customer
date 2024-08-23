@@ -30,7 +30,7 @@ export const certifyCompany = async (regNumber, ceoName, startDate) => {
             return false;
         }
     } catch (error) {
-        console.log(error)
+
         return false; 
     }
 };

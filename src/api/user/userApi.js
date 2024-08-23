@@ -67,7 +67,6 @@ const postSocialUser = async (socialUser) => {
         });
 
         if(res.status===201){
-            console.log(res); 
             return res;
         }
         else{
