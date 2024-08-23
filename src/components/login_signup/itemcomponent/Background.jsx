@@ -1,4 +1,3 @@
-// Background.jsx
 import { Link } from "react-router-dom";
 
 const Background = ({ backgroundSrc, logoSrc, backButtonSrc, backLink, children }) => {
