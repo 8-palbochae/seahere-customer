@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const InputField = ({ type, name, placeholder, value, onChange, onClick, readOnly, className }) => {
+const InputField = ({ type, name, placeholder, value, onChange, onClick, readOnly, className,hideIcon }) => {
     const [isFilled, setIsFilled] = useState(false);
 
     useEffect(() => {
@@ -19,11 +19,12 @@ const InputField = ({ type, name, placeholder, value, onChange, onClick, readOnl
                 onClick={onClick}
                 readOnly={readOnly}
             />
-            {isFilled ? (
+             {!hideIcon && isFilled && (
                 <span className="absolute right-2 top-2 text-green-500">
                     &#10003;
                 </span>
-            ) : (
+            )}
+            {!hideIcon && !isFilled && (
                 <span className="absolute right-2 top-2 text-red-500">
                     &#10007;
                 </span>
