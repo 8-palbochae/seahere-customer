@@ -8,15 +8,19 @@ import InputField from '../itemcomponent/InputField';
 import SubmitButton from '../itemcomponent/SubmitButton';
 import useUserTypeStore from '../../../stores/signupType';
 import { postSocialUser, postUser } from '../../../api/user/userApi';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const SignUpInfo = () => {
-  const { userType, companyId, guestId, initializeState } = useUserTypeStore((state) => ({
+  const [params, setParams] = useSearchParams(); // 변수명 통일
+  const guestId = params.get('guest');
+  
+  const { userType, setUserType, setGuestId, initializeState } = useUserTypeStore((state) => ({
     userType: state.userType,
-    companyId: state.companyId,
-    guestId: state.guestId,
+    setUserType: state.setUserType,
+    setGuestId: state.setGuestId,
     initializeState: state.initializeState,
   }));
+
 
   const navigate = useNavigate();
   const [isPostcodeOpen, setIsPostcodeOpen] = useState(false);
@@ -64,7 +68,7 @@ const SignUpInfo = () => {
         },
         ...(companyId && { companyId }),
       }
-      const response = await postUser(userInfo, userType);
+      const response = await postUser(userInfo, "customer");
       if (response.status === 201) {
         initializeState();
         navigate("/login");
@@ -85,8 +89,7 @@ const SignUpInfo = () => {
         "mainAddress": address,
         "subAddress": detailAddress,
       },
-      "companyId": companyId,
-      "type": userType,
+      "type": "customer",
     }
     try {
       const response = await postSocialUser(userInfo);
