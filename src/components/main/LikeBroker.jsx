@@ -3,10 +3,11 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import BrokerCarousel from '../trade/broker/BrokerCarousel';
 import { axiosInstance } from '../../api/common/axiosInstance';
 import { useNavigate } from 'react-router-dom';
+import { url } from '../../constants/defaultUrl';
 
 const fetchCompanies = async ({ pageParam = 1, size = 10, searchWord = "" }) => {
     try {
-        const response = await axiosInstance.get(`/companies/c/follow`, {
+        const response = await axiosInstance.get(`${url}/companies/c/follow`, {
             params: { page: pageParam, size, searchWord },
         });
         return response.data;

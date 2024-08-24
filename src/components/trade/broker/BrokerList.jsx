@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import BrokerInfo from "./BrokerInfo";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../../../api/common/axiosInstance";
+import { url } from '../../../constants/defaultUrl';
 
 const fetchCompanies = async ({ pageParam = 1, size = 10, searchWord = "" }) => {
-	const response = await axiosInstance.get(`/companies/c`, {
+	const response = await axiosInstance.get(`${url}/companies/c`, {
 		params: { page: pageParam, size, searchWord },
 	});
 	return response.data;

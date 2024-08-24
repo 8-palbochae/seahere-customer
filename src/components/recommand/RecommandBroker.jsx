@@ -2,11 +2,12 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { axiosInstance } from '../../api/common/axiosInstance';
 import BrokerInfo from '../trade/broker/BrokerInfo';
+import { url } from '../../constants/defaultUrl';
 
 
 const getMostOutgoingCompany = async () => {
   try {
-    const response = await axiosInstance.get('/companies/c/best');
+    const response = await axiosInstance.get(`${url}/companies/c/best`);
     if (response.status === 200) {
       return response.data;
     } else {
