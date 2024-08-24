@@ -13,7 +13,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 const SignUpInfo = () => {
   const [params, setParams] = useSearchParams(); // 변수명 통일
   const guestId = params.get('guest');
-  
+
   const { userType, setUserType, setGuestId, initializeState } = useUserTypeStore((state) => ({
     userType: state.userType,
     setUserType: state.setUserType,
@@ -66,7 +66,7 @@ const SignUpInfo = () => {
           "mainAddress": address,
           "subAddress": detailAddress,
         },
-        ...(companyId && { companyId }),
+
       }
       const response = await postUser(userInfo, "customer");
       if (response.status === 201) {
