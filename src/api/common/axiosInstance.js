@@ -4,7 +4,6 @@ import { url } from './../../constants/defaultUrl';
 import { useNavigate } from 'react-router-dom';
 
 const axiosInstance = axios.create({
-  baseURL: url, 
   headers: {
     'Content-Type': 'application/json',
   },
