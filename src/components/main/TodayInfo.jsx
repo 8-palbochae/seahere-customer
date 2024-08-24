@@ -5,16 +5,14 @@ import dayjs from 'dayjs';
 
 const fetchTodayInfo = async () => {
   try {
-    const response = await axiosInstance.get('/outgoings/customer/today');
+    const response = await axiosInstance.get(`${url}/outgoings/customer/today`);
     if (response.status === 200) {
 
       return response.data;
     } else {
-      console.error('Unexpected status code:', response.status);
       return null;
     }
   } catch (error) {
-    console.error('Error fetching today info:', error);
     return null;
   }
 };
