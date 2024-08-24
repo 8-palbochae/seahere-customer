@@ -66,7 +66,6 @@ const SignUpInfo = () => {
           "mainAddress": address,
           "subAddress": detailAddress,
         },
-        ...(companyId && { companyId }),
       }
       const response = await postUser(userInfo, "customer");
       if (response.status === 201) {
