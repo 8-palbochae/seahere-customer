@@ -58,26 +58,26 @@ const SignUpInfo = () => {
 			return;
 		}
 
-		try {
-			const userInfo = {
-				username: formValues.name,
-				email: formValues.email,
-				password: formValues.password,
-				address: {
-					postCode: postCode,
-					mainAddress: address,
-					subAddress: detailAddress,
-				},
-			};
-			const response = await postUser(userInfo, "customer");
-			if (response.status === 201) {
-				initializeState();
-				navigate("/login");
-			}
-		} catch (error) {
-			console.error("회원가입 오류:", error);
-		}
-	};
+    try {
+      const userInfo = {
+        "username": formValues.name,
+        "email": formValues.email,
+        "password": formValues.password,
+        "address": {
+          "postCode": postCode,
+          "mainAddress": address,
+          "subAddress": detailAddress,
+        },
+      }
+      const response = await postUser(userInfo, "customer");
+      if (response.status === 201) {
+        initializeState();
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error('회원가입 오류:', error);
+    }
+  };
 
 	const handleSubmitOAuth = async (e) => {
 		e.preventDefault();
