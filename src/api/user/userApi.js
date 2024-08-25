@@ -97,7 +97,7 @@ const postSocialUser = async (socialUser) => {
 
 const getUserInfo = async () => {
         try {
-            const response = await axiosInstance.get('/users/myinfo');
+            const response = await axiosInstance.get(`${url}/users/myinfo`);
             if (response.status === 200) {
                 return response.data;
             } else {

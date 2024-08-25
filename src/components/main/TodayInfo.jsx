@@ -2,19 +2,18 @@ import React from "react";
 import { axiosInstance } from '../../api/common/axiosInstance';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
+import { url } from '../../constants/defaultUrl';
 
 const fetchTodayInfo = async () => {
   try {
-    const response = await axiosInstance.get('/outgoings/customer/today');
+    const response = await axiosInstance.get(`${url}/outgoings/customer/today`);
     if (response.status === 200) {
 
       return response.data;
     } else {
-      console.error('Unexpected status code:', response.status);
       return null;
     }
   } catch (error) {
-    console.error('Error fetching today info:', error);
     return null;
   }
 };
@@ -24,7 +23,6 @@ const TodayInfo = () => {
     queryKey: ['todayInfo'], 
     queryFn: fetchTodayInfo, 
   });
-
   if (query.isLoading) return <div>Loading...</div>;
   if (query.error) return <div>Error: {query.error.message || 'Failed to fetch data'}</div>;
 

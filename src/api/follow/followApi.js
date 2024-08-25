@@ -3,7 +3,7 @@ import { url } from '../../constants/defaultUrl';
 
 export const followCompany = async (companyId) => {
     try {
-        const response = await axiosInstance.post('/follow/follow-company', null, {
+        const response = await axiosInstance.post(`${url}/follow/follow-company`, null, {
             params: { companyId }
         });
         return response.data;
@@ -15,7 +15,7 @@ export const followCompany = async (companyId) => {
 
 export const unfollowCompany = async (companyId) => {
     try {
-        const response = await axiosInstance.delete('/follow/unfollow-company', {
+        const response = await axiosInstance.delete(`${url}/follow/unfollow-company`, {
             params: { companyId }
         });
         return response.data;

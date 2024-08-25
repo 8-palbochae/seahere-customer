@@ -5,10 +5,11 @@ import { tradeIcon } from '../../constants/trade/trade.image';
 import { useQuery } from '@tanstack/react-query';
 import { axiosInstance } from '../../api/common/axiosInstance';
 import { useNavigate } from 'react-router-dom';
+import { url } from '../../constants/defaultUrl';
 
 const getRecentlyOutgoing = async () => {
   try {
-    const response = await axiosInstance.get('/outgoings/recent');
+    const response = await axiosInstance.get(`${url}/outgoings/recent`);
     if (response.status === 200) {
       return response.data;
     } else {
