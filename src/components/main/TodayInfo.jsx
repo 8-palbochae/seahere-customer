@@ -2,6 +2,7 @@ import React from "react";
 import { axiosInstance } from '../../api/common/axiosInstance';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
+import { url } from '../../constants/defaultUrl';
 
 const fetchTodayInfo = async () => {
   try {
@@ -22,7 +23,6 @@ const TodayInfo = () => {
     queryKey: ['todayInfo'], 
     queryFn: fetchTodayInfo, 
   });
-
   if (query.isLoading) return <div>Loading...</div>;
   if (query.error) return <div>Error: {query.error.message || 'Failed to fetch data'}</div>;
 
