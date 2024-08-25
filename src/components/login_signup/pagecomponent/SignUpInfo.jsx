@@ -11,7 +11,7 @@ import { postSocialUser, postUser } from "../../../api/user/userApi";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const SignUpInfo = () => {
-	const [params, setParams] = useSearchParams(); // 변수명 통일
+	const [params, setParams] = useSearchParams();
 	const guestId = params.get("guest");
 
 	const { userType, setUserType, setGuestId, initializeState } =
@@ -58,26 +58,26 @@ const SignUpInfo = () => {
 			return;
 		}
 
-    try {
-      const userInfo = {
-        "username": formValues.name,
-        "email": formValues.email,
-        "password": formValues.password,
-        "address": {
-          "postCode": postCode,
-          "mainAddress": address,
-          "subAddress": detailAddress,
-        },
-      }
-      const response = await postUser(userInfo, "customer");
-      if (response.status === 201) {
-        initializeState();
-        navigate("/login");
-      }
-    } catch (error) {
-      console.error('회원가입 오류:', error);
-    }
-  };
+		try {
+			const userInfo = {
+				"username": formValues.name,
+				"email": formValues.email,
+				"password": formValues.password,
+				"address": {
+					"postCode": postCode,
+					"mainAddress": address,
+					"subAddress": detailAddress,
+				},
+			}
+			const response = await postUser(userInfo, "customer");
+			if (response.status === 201) {
+				initializeState();
+				navigate("/login");
+			}
+		} catch (error) {
+			console.error('회원가입 오류:', error);
+		}
+	};
 
 	const handleSubmitOAuth = async (e) => {
 		e.preventDefault();
@@ -180,11 +180,10 @@ const SignUpInfo = () => {
 						)}
 						{formValues.confirmPassword && (
 							<div
-								className={`absolute top-1/2 right-4 transform -translate-y-1/2 ${
-									isPasswordMatch
+								className={`absolute top-1/2 right-4 transform -translate-y-1/2 ${isPasswordMatch
 										? "text-green-500"
 										: "text-red-500"
-								}`}
+									}`}
 							>
 								{isPasswordMatch ? "✓" : ""}
 							</div>

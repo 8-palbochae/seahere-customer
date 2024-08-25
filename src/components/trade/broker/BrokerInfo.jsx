@@ -5,6 +5,7 @@ import { tradeIcon } from "../../../constants/trade/trade.image";
 import { followCompany, unfollowCompany } from "../../../api/follow/followApi";
 import { useQueryClient } from "@tanstack/react-query";
 import FollowSuccessModal from "../../common/FollowSuccessModal";
+import { profileUrl } from "../../setting/profileUrl";
 
 const BrokerInfo = ({ company }) => {
 	const { id, companyName, address, isFollowed } = company;
@@ -13,9 +14,8 @@ const BrokerInfo = ({ company }) => {
 	const [modalAction, setModalAction] = useState(null);
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
-
-
-
+	const profileImg = company.profileImg || "";
+	const imageUrl = profileImg ? `${profileUrl + profileImg}?${new Date().getTime()}` : tradeIcon.brokerLogo;
 	const handleLikeClick = async (e) => {
 		e.stopPropagation();
 
@@ -56,7 +56,7 @@ const BrokerInfo = ({ company }) => {
 		>
 			<div className="w-20 h-20 flex items-center justify-center mr-4">
 				<img
-					src={tradeIcon.brokerLogo}
+					src={`${imageUrl}`}
 					className="w-full h-full object-cover rounded-lg"
 					alt="Broker Logo"
 				/>
