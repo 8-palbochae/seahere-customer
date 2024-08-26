@@ -20,21 +20,19 @@ const getMostOutgoingCompany = async () => {
   }
 };
 
-const RecommandBroker = ({data}) => {
+const RecommandBroker = () => {
   const query = useQuery({
     queryKey: ['bestCompany'],
     queryFn: getMostOutgoingCompany,
   });
 
-  if (!data) return <div>추천 매장이 존재하지 않습니다</div>;
-
   if (query.isLoading) return <div>Loading...</div>;
   if (query.error) return <div>Error: {query.error.message || 'Failed to fetch data'}</div>;
   if (!query.data) {
-    return <div>No company data available.</div>;
+    return <div>추천 매장이 존재하지 않습니다</div>;
   }
 
-  const { id, companyName, address, profileImage, followed } = data;
+  const { id, companyName, address, profileImage, followed } = query.data;
 
   const company = {
     id: id,
