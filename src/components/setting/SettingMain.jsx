@@ -8,6 +8,7 @@ import ProfileSettingModal from './profileSettingModal';
 import { profileUrl } from './profileUrl';
 import { useHeaderText } from '../../stores/headerText';
 import { useAuthenticationStore } from '../../api/common/axiosInstance';
+import { postLogout } from '../../api/setting/alarmApi';
 
 const SettingMain = () => {
     const navigate = useNavigate();
@@ -66,8 +67,16 @@ const SettingMain = () => {
     };
 
     const handleLogout = () => {
-        setAccessToken(null);
-        setRefreshToken(null);
+        postLogout()
+            .then(res => {
+                if(res.status === 200){
+                    setAccessToken(null);
+                    setRefreshToken(null);
+                }
+            })
+            .catch(error => {
+                console.error('Logout error:', error.message);
+            });
     };
 
     const openModal = () => {

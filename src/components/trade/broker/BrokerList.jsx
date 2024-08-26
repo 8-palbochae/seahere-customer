@@ -6,7 +6,7 @@ import { axiosInstance } from "../../../api/common/axiosInstance";
 import { url } from '../../../constants/defaultUrl';
 
 const fetchCompanies = async ({ pageParam = 1, size = 10, searchWord = "" }) => {
-	const response = await axiosInstance.get(`${url}/companies/c`, {
+	const response = await axiosInstance.get(`${url}/companies/customer`, {
 		params: { page: pageParam, size, searchWord },
 	});
 	return response.data;
