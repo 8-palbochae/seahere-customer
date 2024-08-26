@@ -11,8 +11,8 @@
         strategies: 'injectManifest',
         srcDir: 'src',
         filename: 'sw.js',
-        registerType: 'register',
-        injectRegister: false,
+        registerType: 'autoUpdate',
+        injectRegister: 'auto',
         manifest: {
           name: 'seahere',
           short_name: 'seahere',
@@ -35,6 +35,12 @@
               sizes: '180x180',
               type: 'image/png'
             }
+          ]
+        },
+        workbox: {
+          globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+          additionalManifestEntries: [
+            { url: '/firebase-messaging-sw.js', revision: null }
           ]
         },
         injectManifest: {
