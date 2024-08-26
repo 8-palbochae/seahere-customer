@@ -53,11 +53,8 @@ const CustomerMain = () => {
   if (isError) {
     return <div>Error: {error.message}</div>;
   }
-	console.log(queries);
   const todayInfo = queries[0].data;
   const company = queries[1].data;
-  // const recentlyOutgoing = queries[3].data;
-  // const bsetCompany = queries[4].data;
 
 	return (
 		<div className="flex flex-col items-center w-full">
