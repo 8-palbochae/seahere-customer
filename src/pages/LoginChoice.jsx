@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import MainLogo from "../assets/common/MainLogo.svg";
 import background from "../assets/common/background.svg";
 import naver from "../assets/login_signup/naver.svg";
@@ -13,6 +13,13 @@ import { postEmailLogin } from '../api/user/authApi';
 import { useAuthenticationStore } from '../stores/authentication';
 
 const LoginChoice = () => {
+   const { accessToken, refreshToken } = useAuthenticationStore();
+
+  if (accessToken && refreshToken) {
+    return <Navigate to="/" replace />;
+  }
+
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { setAccessToken, setRefreshToken } = useAuthenticationStore();
   const navigate = useNavigate();
@@ -34,7 +41,7 @@ const LoginChoice = () => {
     if (errorMessage) {
       const timer = setTimeout(() => {
         setErrorMessage(null);
-      }, 3000); // 3000ms = 3초
+      }, 3000); 
 
       return () => clearTimeout(timer);
     }
@@ -68,7 +75,7 @@ const LoginChoice = () => {
       setAccessToken(access);
       setRefreshToken(refresh);
       if (access && refresh) {
-        navigate("/main");
+        navigate("/");
       }
     } catch (error) {
       setErrorMessage(error.message);

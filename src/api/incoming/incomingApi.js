@@ -9,7 +9,6 @@ const getProductList = async (value) => {
 
             }
         })
-        console.log("url: ", `${url}/product-search-${value}`);
         return res.data;
 
     } catch (error) {

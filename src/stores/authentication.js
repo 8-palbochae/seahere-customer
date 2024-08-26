@@ -3,8 +3,8 @@ import { persist } from 'zustand/middleware';
 
 const useAuthenticationStore = create(persist(
   (set) => ({
-    accessToken: "1234123541", 
-    refreshToken: "1234123412",
+    accessToken: null, 
+    refreshToken: null,
     setAccessToken: (token) => set({ accessToken: token }), 
     setRefreshToken: (token) => set({ refreshToken: token }), 
   }),

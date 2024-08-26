@@ -1,4 +1,3 @@
-// SubmitButton.jsx
 const SubmitButton = ({ children }) => {
     return (
         <button type="submit" className="relative w-[271px] h-[52px] bg-blue-600 rounded-[10px] border border-solid border-black">

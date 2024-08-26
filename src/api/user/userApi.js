@@ -1,19 +1,21 @@
 import axios from "axios";
 import { url } from "../../constants/defaultUrl";
+import { axiosInstance } from '../common/axiosInstance';
 
 const postUser = async (userInfo, type) => {
     const body = {
         "email": userInfo.email,
         "password": userInfo.password,
         "username": userInfo.username,
-        "address": userInfo.address
+        "address": userInfo.address,
+        "telNumber" : userInfo.telNumber,
     };
 
     if (type === 'ceo' && userInfo.companyId) {
         body.companyId = userInfo.companyId;
     }
     try {
-        const res = await axios.post(`${url}/users/${type}`, body, {
+        const res = await axios.post(`${url}/users/customer`, body, {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
             },
@@ -52,8 +54,8 @@ const postSocialUser = async (socialUser) => {
     const body = {
         "userId" : socialUser.userId,
         "username" : socialUser.username,
-        "companyId" : socialUser.companyId,
         "address" : socialUser.address,
+        "telNumber" : socialUser.telNumber,
         "type" : socialUser.type,
     };
     
@@ -65,7 +67,6 @@ const postSocialUser = async (socialUser) => {
         });
 
         if(res.status===201){
-            console.log(res); 
             return res;
         }
         else{
@@ -94,4 +95,17 @@ const postSocialUser = async (socialUser) => {
     }
 };
 
-export { postUser, postSocialUser };
+const getUserInfo = async () => {
+        try {
+            const response = await axiosInstance.get(`${url}/users/myinfo`);
+            if (response.status === 200) {
+                return response.data;
+            } else {
+                console.error('Unexpected response status:', response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching user info:', error);
+        }
+    };
+
+export { postUser, postSocialUser,getUserInfo };

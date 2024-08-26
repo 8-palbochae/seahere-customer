@@ -6,7 +6,6 @@ export const useDatePicker = (initialDate = null) => {
 
   const handleDateChange = (date) => {
     setDate(date);
-    console.log('Selected Date:', date ? date.format('YYYY-MM-DD') : null);
   };
 
   return {

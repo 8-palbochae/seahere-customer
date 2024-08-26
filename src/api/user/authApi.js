@@ -15,7 +15,7 @@ const postEmailLogin = async (loginInfo) => {
         });
 
         if(response.status===200){ 
-            const access = response.headers['authorization']; // 서버에서 설정한 헤더 이름으로 변경
+            const access = response.headers['authorization']; 
             const refresh = response.headers['authorization-refresh']; 
 
             return [access, refresh];
@@ -49,7 +49,7 @@ const postEmailLogin = async (loginInfo) => {
 
 const authenticationGet = async () => {
     try {
-        const response = await axios.get('http://localhost:8080/authentication/protected', {
+        const response = await axios.get(`${url}/authentication/protected`, {
             headers: {
                 'Accept': 'application/json' 
             },
@@ -57,7 +57,7 @@ const authenticationGet = async () => {
         });
         
         if(response.status===200){ 
-            const access = response.headers['authorization']; // 서버에서 설정한 헤더 이름으로 변경
+            const access = response.headers['authorization']; 
             const refresh = response.headers['authorization-refresh']; 
             return [access, refresh];
         }

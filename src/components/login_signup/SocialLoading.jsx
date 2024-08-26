@@ -11,16 +11,12 @@ const SocialLoading = () => {
 
   useEffect(() => {
     const fetchTokens = async () => {
-      if (accessToken === null && refreshToken === null) {
-        try {
-          const [access, refresh] = await authenticationGet();
-          setAccessToken(access);
-          setRefreshToken(refresh);
-        } catch (error) {
-          console.error("Failed to fetch tokens:", error);
-        }
-      } else {
-        setLoading(false); 
+      try {
+        const [access, refresh] = await authenticationGet();
+        setAccessToken(access);
+        setRefreshToken(refresh);
+      } catch (error) {
+        console.error("Failed to fetch tokens:", error);
       }
     };
 
@@ -29,7 +25,7 @@ const SocialLoading = () => {
 
   useEffect(() => {
     if (accessToken && refreshToken) {
-      navigate("/main");
+      navigate("/");
     } else if (accessToken === null && refreshToken === null) {
       setLoading(true);
     }

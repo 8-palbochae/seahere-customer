@@ -17,10 +17,10 @@ const useDragHandler = (onSwipeLeft, onSwipeRight) => {
 
   const handleTouchEnd = useCallback(() => {
     const deltaX = currentX - startX;
-    if (deltaX < -50) { // 왼쪽으로 스와이프
+    if (deltaX < -50) {
       onSwipeLeft();
       setIsSwiped(true);
-    } else if (deltaX > 50) { // 오른쪽으로 스와이프
+    } else if (deltaX > 50) { 
       onSwipeRight();
       setIsSwiped(false);
     }
@@ -36,10 +36,10 @@ const useDragHandler = (onSwipeLeft, onSwipeRight) => {
 
     const handleMouseUp = () => {
       const deltaX = currentX - startX;
-      if (deltaX < -50) { // 왼쪽으로 스와이프
+      if (deltaX < -50) { 
         onSwipeLeft();
         setIsSwiped(true);
-      } else if (deltaX > 50) { // 오른쪽으로 스와이프
+      } else if (deltaX > 50) { 
         onSwipeRight();
         setIsSwiped(false);
       }
