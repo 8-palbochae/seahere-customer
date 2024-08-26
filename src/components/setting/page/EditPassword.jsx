@@ -21,7 +21,7 @@ const EditPassword = () => {
 
 	const handleSubmit = async () => {
 		try {
-			const response = await axiosInstance.patch("/users", {
+			const response = await axiosInstance.patch(`${url}/users`, {
 				password: password,
 			});
 
