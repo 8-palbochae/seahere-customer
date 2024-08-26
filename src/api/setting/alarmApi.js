@@ -12,4 +12,15 @@ const getAlarmHistoryListSlice = async ({ page, size = 10 }) => {
 	}
 };
 
-export { getAlarmHistoryListSlice };
+const postLogout = () => {
+  return axiosInstance.post(`${url}/logout`)
+    .then(response => {
+      return response; 
+    })
+    .catch(error => {
+      throw new Error('Failed to fetch data');
+    });
+};
+
+
+export { getAlarmHistoryListSlice , postLogout};
