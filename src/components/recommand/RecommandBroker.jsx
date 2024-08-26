@@ -7,7 +7,7 @@ import { url } from '../../constants/defaultUrl';
 
 const getMostOutgoingCompany = async () => {
   try {
-    const response = await axiosInstance.get(`${url}/companies/c/best`);
+    const response = await axiosInstance.get(`${url}/companies/customer/best`);
     if (response.status === 200) {
       return response.data;
     } else {
@@ -20,11 +20,13 @@ const getMostOutgoingCompany = async () => {
   }
 };
 
-const RecommandBroker = () => {
+const RecommandBroker = ({data}) => {
   const query = useQuery({
     queryKey: ['bestCompany'],
     queryFn: getMostOutgoingCompany,
   });
+
+  if (!data) return <div>추천 매장이 존재하지 않습니다</div>;
 
   if (query.isLoading) return <div>Loading...</div>;
   if (query.error) return <div>Error: {query.error.message || 'Failed to fetch data'}</div>;
@@ -32,7 +34,7 @@ const RecommandBroker = () => {
     return <div>No company data available.</div>;
   }
 
-  const { id, companyName, address, profileImage, followed } = query.data;
+  const { id, companyName, address, profileImage, followed } = data;
 
   const company = {
     id: id,
