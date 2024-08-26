@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import dayjs from "dayjs";
 import { tradeIcon } from '../../../constants/trade/trade.image';
 import { useNavigate } from 'react-router-dom';
+import { profileUrl } from '../../setting/profileUrl';
 
 
 const OutgoingListItem = ({outgoing}) => {
@@ -12,6 +13,10 @@ const OutgoingListItem = ({outgoing}) => {
         navigate(`/outgoings/${outgoing.outgoingId}`);
     };
 
+    const companyImg = outgoing.company.profileImage;
+    const imageUrl = companyImg ? `${profileUrl}${companyImg}` : tradeIcon.brokerLogo;
+
+    console.log(outgoing);
     const status = {
         'PENDING' : '출고요청',
         'READY' : '출고대기',
@@ -28,7 +33,7 @@ const OutgoingListItem = ({outgoing}) => {
             <div className='w-full flex gap-5'>
                 <div className=''>
                     <div className='w-20 h-20'>
-                        <img src={tradeIcon.brokerLogo} alt="" className='w-full h-full object-cover rounded-xl' />
+                        <img src={imageUrl} alt="" className='w-full h-full object-fill rounded-xl' />
                     </div>
                 </div>
                 <div className='flex flex-col w-4/5 gap-1'>

@@ -34,6 +34,7 @@ const CartModal = ({ isOpen, onClose, inventory, companyId, children }) => {
             naturalStatus: inventory.naturalStatus,
             category: inventory.category,
             companyId: companyId,
+            productImg : inventory.imgUrl,
         };
 
         if (weight <= 0) {

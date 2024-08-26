@@ -8,14 +8,13 @@ import FollowSuccessModal from "../../common/FollowSuccessModal";
 import { profileUrl } from "../../setting/profileUrl";
 
 const BrokerInfo = ({ company }) => {
-	const { id, companyName, address, isFollowed } = company;
+	const { id, companyName, address, isFollowed, profileImage } = company;
 	const [isLike, setIsLike] = useState(isFollowed);
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 	const [modalAction, setModalAction] = useState(null);
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
-	const profileImg = company.profileImg || "";
-	const imageUrl = profileImg ? `${profileUrl + profileImg}?${new Date().getTime()}` : tradeIcon.brokerLogo;
+	const imageUrl = profileImage ? `${profileUrl}${profileImage}` : tradeIcon.brokerLogo;
 	const handleLikeClick = async (e) => {
 		e.stopPropagation();
 
@@ -103,6 +102,7 @@ BrokerInfo.propTypes = {
 			postCode: PropTypes.string.isRequired,
 		}).isRequired,
 		isFollowed: PropTypes.bool.isRequired,
+		profileImage: PropTypes.string, 
 	}).isRequired,
 };
 

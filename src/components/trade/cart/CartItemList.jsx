@@ -6,6 +6,7 @@ import { url } from "../../../constants/defaultUrl";
 import { tradeIcon } from "../../../constants/trade/trade.image";
 import { axiosInstance } from "../../../api/common/axiosInstance";
 import bottomIcon from '../../../constants/bottom/bottom.image';
+import { profileUrl } from '../../setting/profileUrl';
 
 const CartItemList = () => {
 	const { cartItems, company } = useCartStore((state) => ({
@@ -42,7 +43,6 @@ const CartItemList = () => {
 			setIsLoaded(true);
 		}
 	}, [company]);
-
 	if (company === null) {
 		return (
 			<div className="flex items-center justify-center w-full h-3/5">
@@ -74,12 +74,14 @@ const CartItemList = () => {
 		return total + (cartItem.quantity || 0);
 	}, 0);
 
+	// const imageUrl = company.profileImage ? `${profileUrl}${company.profileImage}` : tradeIcon.brokerLogo;
+	// console.log(compantData)
 	return (
 		<>
 			<div className="flex w-full text-left font-bold text-xl ml-4 mt-4 mb-2 justify-start gap-3 items-center">
 				<div className="w-6 h-6">
 					<img
-						src={tradeIcon.brokerLogo}
+						src={companyData.profileImage ? `${profileUrl}${companyData.profileImage}` : tradeIcon.brokerLogo}
 						alt=""
 						className="w-full h-full object-cover rounded-md"
 					/>

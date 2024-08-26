@@ -41,7 +41,7 @@ const CartItem = ({ cartItem }) => {
     return (
         <div className='flex justify-around items-center p-4 border rounded-md shadow-md w-full'>
             <div className='w-16 h-16'>
-                <img src={tradeIcon.brokerLogo} alt="" className='w-full h-full object-cover rounded-md' />
+                <img src={cartItem.productImg} alt="" className='w-full h-full object-fill rounded-md' />
             </div>
             <div className='flex flex-col w-full pl-4'>
                 <div className='flex justify-around mb-2'>
