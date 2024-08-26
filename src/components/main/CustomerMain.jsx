@@ -66,7 +66,7 @@ const CustomerMain = () => {
 			</div>
 			<div className="flex flex-col justify-center items-center rounded-[20px] w-full p-2 h-1/5">
 				<p className='w-full font-bold mb-2 text-lg ml-2'>👍 추천 매장</p>
-				<RecommandBroker company={company}/>
+				<RecommandBroker/>
 			</div>
 			<div className='flex w-full p-2 gap-4 h-1/5'>
                 <div className='flex flex-1'>
