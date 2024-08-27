@@ -94,10 +94,6 @@ const SettingMain = () => {
         }));
     };
 
-    useEffect(() => {
-        console.log("Rendering Image with URL:", `${user.profileImg !== null ? profileUrl + user.profileImg + '?' + new Date().getTime() : defaultImage}`);
-    }, [user.profileImage]);
-
     return (
         <div className='flex flex-col items-center p-4'>
             <div className='w-36 h-36 mt-10 relative'>
