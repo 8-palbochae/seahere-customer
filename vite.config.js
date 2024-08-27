@@ -12,7 +12,7 @@
         srcDir: 'src',
         filename: 'sw.js',
         registerType: 'autoUpdate',
-        injectRegister: 'auto',
+        injectRegister: false,
         manifest: {
           name: 'seahere',
           short_name: 'seahere',
@@ -37,21 +37,16 @@
             }
           ]
         },
-        workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-          additionalManifestEntries: [
-            { url: '/firebase-messaging-sw.js', revision: null }
-          ]
-        },
         injectManifest: {
-          globPatterns: ['**/*.{js,css,html,svg,png,ico}']
+          globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
         },
+    
         devOptions: {
           enabled: false,
           navigateFallback: 'index.html',
           suppressWarnings: true,
-          type: 'module'
-        }
+          type: 'module',
+        },
       })
     ]
   });
