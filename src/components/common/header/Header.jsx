@@ -13,17 +13,12 @@ export const Header = () => {
 		navigate(page);
 	};
 
-	const logoutHandler = () => {
-		setAccessToken(null);
-		setRefreshToken(null);
-	};
-
 	const showLogoutIcon = accessToken && refreshToken;
 
 	return (
 		<div>
-			<div className="flex justify-between h-16 bg-white border-b border-D9D9D9">
-				<div className="flex justify-center items-center w-16">
+			<div className="flex justify-between h-16 bg-white border-b p-2">
+				<div className="flex justify-center items-center">
 					<img
 						onClick={() => onClick(-1)}
 						src={headerIcon.backIcon}
@@ -34,7 +29,7 @@ export const Header = () => {
 				<div className="flex justify-items-center items-center text-center font-bold text-lg">
 					{headerText}
 				</div>
-				<div className="flex justify-center items-center mr-3">
+				<div className="flex justify-center items-center">
 					<img
 						onClick={() => onClick("/alarm-history")}
 						src={headerIcon.bellIcon}
