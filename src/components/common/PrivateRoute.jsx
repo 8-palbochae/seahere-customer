@@ -5,7 +5,7 @@ import { useAuthenticationStore } from '../../stores/authentication';
 const PrivateRoute = () => {
   const { accessToken , refreshToken} = useAuthenticationStore();
 
-  if (!accessToken && !refreshToken) {
+  if (!accessToken || !refreshToken) {
     return <Navigate to="/login" replace />;
   }
 
