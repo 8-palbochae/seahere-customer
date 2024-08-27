@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { axiosInstance } from '../../api/common/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { url } from '../../constants/defaultUrl';
+import { profileUrl } from '../setting/profileUrl';
 
 const getRecentlyOutgoing = async () => {
   try {
@@ -27,7 +28,6 @@ const getRecentlyOutgoing = async () => {
 const CurrentOutgoing = () => {
 
     const navigate = useNavigate(); 
-
     
     const query = useQuery({
         queryKey: ['recentOugoing'], 
@@ -67,7 +67,7 @@ const CurrentOutgoing = () => {
                     <p className='font-bold text-gray-500 w-full text-left mb-1'>최근 거래</p>
                     <div className='w-20 h-20'>
                         <img 
-                        src={tradeIcon.brokerLogo} 
+                        src={query.data.company.profileImage ? `${profileUrl}${query.data.company.profileImage}` : tradeIcon.brokerLogo} 
                         className='w-full h-full object-cover rounded-lg' 
                         alt="Broker Logo" 
                         />
