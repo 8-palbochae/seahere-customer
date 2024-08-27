@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { url } from '../../constants/defaultUrl';
+import { axiosInstance } from '../../api/common/axiosInstance';
 
-// 데이터 패칭 함수
 const fetchTodayInfo = async () => {
   try {
-    const response = await axios.get(`${url}/outgoings/customer/today`);
+    const response = await axiosInstance.get(`${url}/outgoings/customer/today`);
     if (response.status === 200) {
       return response.data;
     } else {
@@ -24,7 +24,6 @@ const TodayInfo = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // 컴포넌트 마운트 시 데이터 패칭
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,7 +38,7 @@ const TodayInfo = () => {
     };
 
     fetchData();
-  }, []); // 빈 배열을 주면 컴포넌트가 마운트될 때만 호출됨
+  }, []); 
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message || 'Failed to fetch data'}</div>;
