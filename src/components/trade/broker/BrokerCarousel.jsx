@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { tradeIcon } from '../../../constants/trade/trade.image';
 import { useSwipeable } from 'react-swipeable';
+import { profileUrl } from '../../setting/profileUrl';
 
 const BrokerCarousel = ({ companies }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -12,7 +13,7 @@ const BrokerCarousel = ({ companies }) => {
         ...company,
         isFollowed: company.followed,
     }));
-
+    console.log(companies);
     const handleNavigate = (company) => {
         navigate(`/trades/broker/${company.id}`, { state: { company } });
     };
@@ -44,28 +45,35 @@ const BrokerCarousel = ({ companies }) => {
     }
 
     return (
-        <div className="w-full h-full flex flex-col items-center p-2" {...handlers}>
-            <div className="flex justify-center items-center mb-2">
+        <div className="w-full flex flex-col items-center p-2" {...handlers}>
+            <div className="flex flex-col justify-center items-center mb-2">
+            <p className='font-bold text-gray-500 w-full text-left mb-1'>팔로우</p>
+
                 <div
-                    className="flex-none w-24 h-24 cursor-pointer bg-white shadow rounded-lg"
+                    className="flex-none w-full items-center cursor-pointer bg-white shadow rounded-lg mt-2"
                     onClick={() => handleNavigate(companiesWithIsFollowed[currentIndex])}
                 >
-                    <img
-                        src={companiesWithIsFollowed[currentIndex]?.logoUrl || tradeIcon.brokerLogo || 'default-logo.png'}
-                        alt={`${companiesWithIsFollowed[currentIndex]?.companyName || 'No Name'} Logo`}
-                        className="w-full h-16 object-cover rounded-t-lg"
-                    />
-                    <p className="text-center text-xs mt-1 truncate">
+                    <div className='w-24 h-24'>
+                        <img
+                            src={companiesWithIsFollowed[currentIndex].profileImage ? `${profileUrl}${companiesWithIsFollowed[currentIndex].profileImage}` : tradeIcon.brokerLogo}
+                            alt={`${companiesWithIsFollowed[currentIndex]?.companyName || 'No Name'} Logo`}
+                            className="w-full h-full object-cover rounded-lg"
+                        />
+                        <p className="text-center mt-1 truncate">
                         {companiesWithIsFollowed[currentIndex]?.companyName || '이름 없음'}
-                    </p>
+                        </p>
+                    </div>
                 </div>
             </div>
-            <p
-                className='text-gray-800 w-full text-center mt-2 cursor-pointer text-sm'
-                onClick={() => navigate('/following')}
-            >
-                관심 업체 등록 / 수정
-            </p>
+            <div className='w-full mt-8'>
+                <div className='border-t-2 border-gray-300 w-full'></div>
+                <p
+                    className='text-gray-800 w-full text-center mt-2 cursor-pointer text-sm'
+                    onClick={() => navigate('/following')}
+                >
+                    관심 업체 등록 / 수정
+                </p>
+            </div>
         </div>
     );
 };

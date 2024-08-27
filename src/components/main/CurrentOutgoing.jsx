@@ -65,7 +65,7 @@ const CurrentOutgoing = () => {
             <div className='bg-white border border-gray-200 rounded-lg shadow-md p-4 cursor-pointer flex-1' onClick={() => handleMoving(query.data.company.id)}>
                 <div className='flex flex-col w-full h-full items-center justify-center gap-2'>
                     <p className='font-bold text-gray-500 w-full text-left mb-1'>최근 거래</p>
-                    <div className='w-20 h-20'>
+                    <div className='w-24 h-24'>
                         <img 
                         src={query.data.company.profileImage ? `${profileUrl}${query.data.company.profileImage}` : tradeIcon.brokerLogo} 
                         className='w-full h-full object-cover rounded-lg' 
