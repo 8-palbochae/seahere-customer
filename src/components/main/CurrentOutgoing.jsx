@@ -42,7 +42,6 @@ const CurrentOutgoing = () => {
     if (query.isLoading) return <div>Loading...</div>;
     if (query.error) return <div>Error: {query.error.message || 'Failed to fetch data'}</div>;
     
-    console.log(query.data);
     if (!query.data.outgoingId) {
         return (
             <div className='flex flex-col w-full h-full items-center justify-center'>
