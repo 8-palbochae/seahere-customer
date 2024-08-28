@@ -8,6 +8,7 @@ const OutgoingModal = ({ isOpen, onClose }) => {
   const navigate =useNavigate();
   const [requestCompleted, setRequestCompleted] = useState(false);
   const [agreementChecked, setAgreementChecked] = useState(false);
+  const [isClick, setIsClick] = useState(true);
   const { cartItems, company, clearCart } = useCartStore((state) => ({
         cartItems: state.cartItems,
         company : state.company,
@@ -39,6 +40,7 @@ const sendOutgoingRequest = async (outgoingRequests) => {
         });
 
         if(response.status === 200){
+          setIsClick(true);
           clearCart();
           navigate('/');
           alert("출고 요청 성공");
@@ -56,6 +58,7 @@ const sendOutgoingRequest = async (outgoingRequests) => {
       tradeType:"b2c",
       details : toRequest(cartItems),
     }
+    setIsClick(false);
     sendOutgoingRequest(outgoing);
   }
 
