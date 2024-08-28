@@ -63,7 +63,7 @@ const CartModal = ({ isOpen, onClose, inventory, companyId, children }) => {
 
     return ReactDOM.createPortal(
         <div className='fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50'>
-            <div className='bg-white p-4 rounded-md shadow-lg max-w-5xl mx-auto w-11/12'>
+            <div className='bg-white p-3 rounded-md shadow-lg max-w-5xl mx-auto w-11/12'>
                 <div className='flex flex-col h-full w-full'>
                     <div className='flex-grow'>
                         {children}

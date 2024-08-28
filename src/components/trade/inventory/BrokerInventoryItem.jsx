@@ -8,11 +8,10 @@ const BrokerInventoryItem = ({ inventory }) => {
     return (
         <div className='flex flex-row justify-between items-center w-full border-b-2 border-gray-200 rounded-md'>
             <div className='w-1/5 flex flex-col items-center text-center p-2 '>
-              
                 <div className='relative w-14 h-14'>
                     <img 
                         src={inventory.imgUrl} 
-                        className='w-full h-full object-cover rounded-md' 
+                        className='w-full h-full object-fill rounded-md' 
                         alt="Trade Icon" 
                     />
                 </div>
@@ -26,7 +25,7 @@ const BrokerInventoryItem = ({ inventory }) => {
                 <div className='text-md'>{inventory.country}</div>
                 <div className='text-md'>{inventory.naturalStatus}</div>
             </div>
-            <div className='w-3/12 flex flex-col items-center text-center border-gray-300 p-2'>
+            <div className='w-2/12 flex flex-col items-center text-center border-gray-300 p-2'>
                 <div>
                     <span className='font-bold text-blue-600'>{inventory.price.toLocaleString()}</span>
                 </div>
