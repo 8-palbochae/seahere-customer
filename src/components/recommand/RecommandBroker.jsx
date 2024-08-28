@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { axiosInstance } from '../../api/common/axiosInstance';
 import BrokerInfo from '../trade/broker/BrokerInfo';
 import { url } from '../../constants/defaultUrl';
-import { axiosInstance } from '../../api/common/axiosInstance';
+
 
 const getMostOutgoingCompany = async () => {
   try {
@@ -14,45 +15,39 @@ const getMostOutgoingCompany = async () => {
       return null;
     }
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching today info:', error);
     return null;
   }
 };
 
 const RecommandBroker = () => {
-  const [company, setCompany] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const query = useQuery({
+    queryKey: ['bestCompany'],
+    queryFn: getMostOutgoingCompany,
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const data = await getMostOutgoingCompany();
-        if (data) {
-          console.log(data);
-          setCompany({
-            id: data.id,
-            companyName: data.companyName,
-            address: data.address,
-            profileImage: data.profileImage,
-            isFollowed: data.followed !== undefined ? data.followed : false,
-          });
-        }
-      } catch (err) {
-        setError(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  if (query.isLoading) return <div>Loading...</div>;
+  if (query.error) return <div>Error: {query.error.message || 'Failed to fetch data'}</div>;
+  if (!query.data) {
+    return <div>현재 매장 정보가 모두 존재하지 않습니다</div>;
+  }
 
-    fetchData();
-  }, []); 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message || 'Failed to fetch data'}</div>;
-  if (!company) return <div>추천 매장이 존재하지 않습니다</div>;
+  const { id, companyName, address, profileImage, followed } = query.data;
 
-  return <BrokerInfo company={company} />;
+  const company = {
+    id: id,
+    companyName: companyName,
+    address: address,
+    profileImage: profileImage,
+    isFollowed: followed !== undefined ? followed : false
+  };
+
+  return (
+    <>
+      <BrokerInfo company={company} />
+    </>
+  );
 };
 
-export default RecommandBroker;
+
+export default RecommandBroker; 
